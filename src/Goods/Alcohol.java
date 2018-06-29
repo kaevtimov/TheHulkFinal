@@ -1,6 +1,7 @@
 package Goods;
 
 public class Alcohol extends Good{
+    //dfghgh
 
     private int alcoholContaining;
     private PackageType packageType;
@@ -8,7 +9,8 @@ public class Alcohol extends Good{
 
 
     public Alcohol(String name, double price, double taxes, int quantity, double deliveryPrice,
-                      String expDate, String productInfo, int productNumber, int numberOfPurchases, int alcoholContaining, AlcoholType alcoholType , PackageType packageType) {
+                      String expDate, String productInfo, int productNumber, int numberOfPurchases,
+                   int alcoholContaining, AlcoholType alcoholType , PackageType packageType) {
         super(name, price, taxes, quantity, deliveryPrice, expDate, productInfo, productNumber, numberOfPurchases);
         this.alcoholContaining = alcoholContaining;
         this.alcoholType = alcoholType;
