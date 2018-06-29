@@ -1,5 +1,6 @@
 package Individuals;
 
+import Goods.GoodType;
 import Orders.OrderType;
 import Orders.Orderers;
 import Orders.PayType;
@@ -40,8 +41,13 @@ public class Administrator extends Individual implements Orderers, Seller, Searc
         //
     }
 
+//    @Override
+//    public void searchProduct() {
+//        //
+//    }
+
     @Override
-    public void searchProduct() {
-        //
+    public void searchProduct(int quantity, GoodType goodType) {
+
     }
 }
