@@ -9,9 +9,9 @@ public class Alcohol extends Good{
 
 
     public Alcohol(String name, double price, double taxes, int quantity, double deliveryPrice,
-                      String expDate, String productInfo, int productNumber, int numberOfPurchases,
+                      String expDate, String productInfo, int productNumber, int numberOfPurchases,GoodType goodType,
                    int alcoholContaining, AlcoholType alcoholType , PackageType packageType) {
-        super(name, price, taxes, quantity, deliveryPrice, expDate, productInfo, productNumber, numberOfPurchases);
+        super(name, price, taxes, quantity, deliveryPrice, expDate, productInfo, productNumber, numberOfPurchases,goodType );
         this.alcoholContaining = alcoholContaining;
         this.alcoholType = alcoholType;
         this.packageType = packageType;
