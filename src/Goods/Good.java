@@ -103,7 +103,7 @@ public abstract class Good {
 
 
 
-    public abstract void showCatalog();
+    public abstract void showProduct();
 
     public int getTotalQuantity() {
         return totalQuantity;
