@@ -7,8 +7,8 @@ public class Food extends Good{
 
 
     public Food(String name, double price, double taxes, int quantity, double deliveryPrice,
-                   String expDate, String productInfo, int productNumber, int numberOfPurchases, FoodType foodType) {
-        super(name, price, taxes, quantity, deliveryPrice, expDate, productInfo, productNumber, numberOfPurchases);
+                   String expDate, String productInfo, int productNumber, int numberOfPurchases, FoodType foodType, GoodType goodType) {
+        super(name, price, taxes, quantity, deliveryPrice, expDate, productInfo, productNumber, numberOfPurchases, goodType);
         this.foodType = foodType;
     }
 
@@ -22,7 +22,7 @@ public class Food extends Good{
     }
 
     @Override
-    public void showCatalog() {
+    public void showProduct() {
 
     }
 }

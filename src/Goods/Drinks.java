@@ -4,9 +4,9 @@ public class Drinks extends Good {
 
 
 
-    public Drinks(String name, double price, int quantity, double deliveryPrice,
+    public Drinks(String name, double price, int taxes, int quantity, double deliveryPrice,
                   String expDate, String productInfo, int productNumber, int numberOfPurchases, GoodType goodType) {
-        super(name, price, quantity, deliveryPrice, expDate, productInfo, productNumber, numberOfPurchases, goodType);
+        super(name, price, taxes, quantity, deliveryPrice, expDate, productInfo, productNumber, numberOfPurchases, goodType);
     }
 
     @Override

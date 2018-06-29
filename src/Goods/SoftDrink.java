@@ -5,10 +5,10 @@ public class SoftDrink extends Drinks {
     private SoftDrinkType softDrinkType;
 
 
-    public SoftDrink(String name, int quantity, String expDate, String productInfo,
+    public SoftDrink(String name, double price, int taxes, int quantity, double deliveryPrice, String expDate, String productInfo,
                      int productNumber, int numberOfPurchases, GoodType goodType,
                      SoftDrinkType softDrinkType) {
-        super(name, 10, quantity, 3, expDate, productInfo, productNumber, numberOfPurchases, goodType);
+        super(name, price, taxes,quantity, deliveryPrice, expDate, productInfo, productNumber, numberOfPurchases, goodType);
         this.softDrinkType = softDrinkType;
     }
 
