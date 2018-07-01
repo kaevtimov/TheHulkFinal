@@ -3,13 +3,19 @@ package Goods;
 public class SoftDrink extends Drinks {
 
     private SoftDrinkType softDrinkType;
+    private double deliveryPrice;
 
-
-    public SoftDrink(String name, double price, int taxes, int quantity, double deliveryPrice, String expDate, String productInfo,
-                     int productNumber, int numberOfPurchases, GoodType goodType,
-                     SoftDrinkType softDrinkType) {
-        super(name, price, taxes,quantity, deliveryPrice, expDate, productInfo, productNumber, numberOfPurchases, goodType);
+    public SoftDrink(String name, int quantity, GoodType goodType, SoftDrinkType softDrinkType){      // construktor za poruchkite
+        super(name, quantity, goodType);
         this.softDrinkType = softDrinkType;
+    }
+
+
+    public SoftDrink(String name, double priceWarehouse, int quantity, String expDate, String productInfo,
+                     GoodType goodType, SoftDrinkType softDrinkType) {
+        super(name, priceWarehouse, quantity, expDate, productInfo, goodType);
+        this.softDrinkType = softDrinkType;
+        this.deliveryPrice = 0.30;       // na edinica napitka
     }
 
     public SoftDrinkType getSoftDrinkType() {
@@ -22,7 +28,7 @@ public class SoftDrink extends Drinks {
 
     @Override
     public void showProduct() {
-        System.out.printf("This is %s-%s %s, price: %f, total amount of quantity: %d and expiration date: %s.\n %s",
-                getGoodType(), getSoftDrinkType(), getName(), getPrice(), getTotalQuantity(), getExpDate(), getProductInfo());
+        System.out.printf("This is %s-%s \"%s\", price: %.2f, total amount of quantity: %d and expiration date: %s. %s\n",
+                getGoodType(), getSoftDrinkType(), getName(), getPriceWarehouse(), getTotalQuantity(), getExpDate(), getProductInfo());
     }
 }

@@ -1,22 +1,27 @@
 package Goods;
 
-public class Alcohol extends Good{
+public class Alcohol extends Drinks{
 
-    private int alcoholContaining;
+    private double alcoholContaining;
     private PackageType packageType;
     private AlcoholType alcoholType;
+    private double deliveryPrice;
 
+    public Alcohol(String name, int quantity, GoodType goodType, AlcoholType alcoholType){      // construktor za poruchkite
+        super(name, quantity, goodType);
+        this.alcoholType = alcoholType;
+    }
 
-    public Alcohol(String name, double price, double taxes, int quantity, double deliveryPrice,
-                      String expDate, String productInfo, int productNumber, int numberOfPurchases,GoodType goodType,
-                   int alcoholContaining, AlcoholType alcoholType , PackageType packageType) {
-        super(name, price, taxes, quantity, deliveryPrice, expDate, productInfo, productNumber, numberOfPurchases, goodType);
+    public Alcohol(String name, double priceWarehouse, int quantity, String expDate, String productInfo, GoodType goodType,
+                   double alcoholContaining, AlcoholType alcoholType , PackageType packageType) {
+        super(name, priceWarehouse, quantity, expDate, productInfo, goodType);
         this.alcoholContaining = alcoholContaining;
         this.alcoholType = alcoholType;
         this.packageType = packageType;
+        this.deliveryPrice = 0.60;         // na edinica alcohol
     }
 
-    public int getAlcoholContaining() {
+    public double getAlcoholContaining() {
         return alcoholContaining;
     }
 
@@ -42,6 +47,8 @@ public class Alcohol extends Good{
 
     @Override
     public void showProduct() {
-
+        System.out.printf("This is %s-%s \"%s\", price: %.2f, total amount of quantity: %d and expiration date: %s.\n" +
+                        "%s with alcohol contaning: %.2f procent.\n",
+                getGoodType(), getAlcoholType(), getName(), getPriceWarehouse(), getTotalQuantity(), getExpDate(), getProductInfo(), getAlcoholContaining());
     }
 }

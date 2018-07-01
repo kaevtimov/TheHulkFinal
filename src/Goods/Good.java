@@ -2,28 +2,29 @@ package Goods;
 
 public abstract class Good {
     private String name;
-    private double price;
+    private double priceProducer;
+    private double priceWarehouse;
     private GoodType goodType;
-    private double taxes;
     private int quantity;
     private int totalQuantity;
-    private double deliveryPrice;
     private String expDate;
     private String productInfo;
     private int productNumber;
-    private int numberOfPurchases;
+    private double deliveryPrice;
 
-    public Good(String name, double price, double taxes, int quantity, double deliveryPrice,
-                   String expDate, String productInfo, int productNumber, int numberOfPurchases, GoodType goodType) {
+    public Good(String name, double priceWarehouse, int quantity, String expDate, String productInfo, GoodType goodType) {
         this.name = name;
-        this.price = price + taxes + deliveryPrice;
-        this.taxes = taxes;
+        this.priceProducer = priceWarehouse/2;
+        this.priceWarehouse = priceWarehouse;
         this.quantity = quantity;
-        this.deliveryPrice = deliveryPrice;
         this.expDate = expDate;
         this.productInfo = productInfo;
         this.productNumber = productNumber;
-        this.numberOfPurchases = numberOfPurchases;
+        this.goodType = goodType;
+    }
+    public Good(String name, int quantity, GoodType goodType){        // za poruchki
+        this.name = name;
+        this.quantity = quantity;
         this.goodType = goodType;
     }
 
@@ -37,20 +38,20 @@ public abstract class Good {
         this.name = name;
     }
 
-    public double getPrice() {
-        return price;
+    public double getPriceProducer() {
+        return priceProducer;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPriceProducer(double priceProducer) {
+        this.priceProducer = priceProducer;
     }
 
-    public double getTaxes() {
-        return taxes;
+    public double getPriceWarehouse() {
+        return priceWarehouse;
     }
 
-    public void setTaxes(double taxes) {
-        this.taxes = taxes;
+    public void setPriceWarehouse(double priceWarehouse) {
+        this.priceWarehouse = priceWarehouse;
     }
 
     public int getQuantity() {
@@ -59,14 +60,6 @@ public abstract class Good {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public double getDeliveryPrice() {
-        return deliveryPrice;
-    }
-
-    public void setDeliveryPrice(double deliveryPrice) {
-        this.deliveryPrice = deliveryPrice;
     }
 
     public String getExpDate() {
@@ -93,18 +86,6 @@ public abstract class Good {
         this.productNumber = productNumber;
     }
 
-    public int getNumberOfPurchases() {
-        return numberOfPurchases;
-    }
-
-    public void setNumberOfPurchases(int numberOfPurchases) {
-        this.numberOfPurchases = numberOfPurchases;
-    }
-
-
-
-    public abstract void showProduct();
-
     public int getTotalQuantity() {
         return totalQuantity;
     }
@@ -116,8 +97,9 @@ public abstract class Good {
     public GoodType getGoodType() {
         return goodType;
     }
-
-    public void setGoodType(GoodType goodType) {
-        this.goodType = goodType;
+    public double getDeliveryPrice() {
+        return deliveryPrice;
     }
+
+    public abstract void showProduct();
 }
