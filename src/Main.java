@@ -6,8 +6,7 @@ import Orders.PayType;
 public class Main {
 
     public static void main(String[] args) {
-<<<<<<< HEAD
-
+//coment
 
         //pravim si sklad, customer, admin, kasa
 
@@ -56,8 +55,6 @@ public class Main {
         warehouse.showCatalog();
 
 
-=======
         System.out.println();
->>>>>>> 302536758b0bfc6171b586eb7e098e54e2e59ac4
     }
 }
