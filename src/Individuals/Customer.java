@@ -8,11 +8,13 @@ import Orders.PayType;
 public class Customer extends Individual implements Orderers, Searching{
 
     private CustomerType customerType;
+    private double budjet;
 
 
-    public Customer(String name, double budget, PersonalType personalType, String nationality, String personalInfo, CustomerType customerType) {
-        super(name, budget, personalType, nationality, personalInfo);
+    public Customer(String name, PersonalType personalType, String nationality, String personalInfo, CustomerType customerType, double budjet) {
+        super(name, personalType, nationality, personalInfo);
         this.customerType = customerType;
+        this.budjet = budjet;
     }
 
     public CustomerType getCustomerType() {
@@ -23,6 +25,9 @@ public class Customer extends Individual implements Orderers, Searching{
         this.customerType = customerType;
     }
 
+    public double getBudjet() { return budjet; }
+
+    public void setBudjet(double budjet) { this.budjet = budjet; }
 
     @Override
     public void makeOrder(String deadline, OrderType orderType) {
@@ -48,4 +53,6 @@ public class Customer extends Individual implements Orderers, Searching{
     public void searchProduct(int quantity, GoodType goodType) {
         //
     }
+
+
 }

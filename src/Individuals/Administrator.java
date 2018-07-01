@@ -5,13 +5,14 @@ import Orders.OrderType;
 import Orders.Orderers;
 import Orders.PayType;
 
-public class Administrator extends Individual implements Orderers, Seller, Searching{
+public class Administrator extends Stuff implements Orderers, Seller, Searching{
 
-    //
-
-    public Administrator(String name, double budget, PersonalType personalType, String nationality, String personalInfo) {
-        super(name, budget, personalType, nationality, personalInfo);
+    public Administrator(String name, PersonalType personalType, String nationality, String personalInfo, double salary, double bankAccount) {
+        super(name, personalType, nationality, personalInfo, salary, bankAccount);
     }
+
+
+
 
 
     @Override
