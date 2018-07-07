@@ -5,7 +5,7 @@ public class Alcohol extends Drinks{
     private double alcoholContaining;
     private PackageType packageType;
     private AlcoholType alcoholType;
-    private double deliveryPrice;
+    private double deliveryPrice; // alchohol delivery price
 
     public Alcohol(String name, int quantity, GoodType goodType, AlcoholType alcoholType){      // construktor za poruchkite
         super(name, quantity, goodType);
