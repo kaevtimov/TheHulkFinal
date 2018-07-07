@@ -1,54 +1,42 @@
 package Individuals;
 
 import Goods.GoodType;
-import Orders.OrderType;
-import Orders.Orderers;
+import Orders.Orderable;
 import Orders.PayType;
 
-public class Administrator extends Stuff implements Orderers, Seller, Searching{
+public class Administrator extends Individual implements Orderable, Sellable, Searchable {
 
-    public Administrator(String name, PersonalType personalType, String nationality, String personalInfo, double salary, double bankAccount) {
-        super(name, personalType, nationality, personalInfo, salary, bankAccount);
+    //
+
+    public Administrator(String name,PersonalType personalType, String nationality, String personalInfo) {
+        super(name, personalType, nationality, personalInfo);
     }
-
-
-
 
 
     @Override
-    public void makeOrder(String deadline, OrderType orderType) {
-        System.out.printf("Order made from administrator: %s, %s. Deadline till : %s .", getName(), getPersonalType(), deadline);
+    public void order(GoodType goodType, int quantity, double orderValue, String productName) {
+        System.out.printf("Order made from administrator: %s, %s.\n", getName(), getPersonalType()); //da dovursha
     }
 
     @Override
-    public void pay(PayType payType, String bankAccNumber) {
+    public void pay(PayType payType, double amount) {
         //
     }
 
     @Override
-    public void sell() {
+    public void sell(Casse casse, double contractAmount) {
+        casse.setIncome(casse.getIncome() + contractAmount);             // uvelichavame income na sklada
+        System.out.println("- Payment accept! Congrats! Hope we are going to see you again !");
+    }
+
+
+    public void removeProduct(){       // da premahva produkti s iztekul srok
         //
     }
 
-    public void updateProductInfo(){
-        //
-    }
-
-    public void removeProduct(){
-        //
-    }
-
-    public void checkCatalog(){
-        //
-    }
-
-//    @Override
-//    public void searchProduct() {
-//        //
-//    }
 
     @Override
-    public void searchProduct(int quantity, GoodType goodType) {
-
+    public void searchableProduct(String name, int quantity, GoodType goodType) {
+        //
     }
 }

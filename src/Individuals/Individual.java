@@ -2,12 +2,11 @@ package Individuals;
 
 public class Individual {
     private String name;
-    //private double budget;  //customer
     private PersonalType personalType;
     private String nationality;
     private String personalInfo;
 
-    public Individual(String name,  PersonalType personalType, String nationality, String personalInfo) {
+    public Individual(String name, PersonalType personalType, String nationality, String personalInfo) {
         this.name = name;
         this.personalType = personalType;
         this.nationality = nationality;
@@ -46,6 +45,4 @@ public class Individual {
     public void setPersonalInfo(String personalInfo) {
         this.personalInfo = personalInfo;
     }
-
-
 }

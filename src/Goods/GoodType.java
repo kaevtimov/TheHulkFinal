@@ -2,6 +2,6 @@ package Goods;
 
 public enum GoodType {
 
-    ALCOHOL, FOOD, DOMESTIC, OTHER
+    ALCOHOL, FOOD, DOMESTIC, SOFTDRINK, OTHER
 
 }

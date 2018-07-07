@@ -1,19 +1,16 @@
 package Individuals;
 
-public class Supplier extends Stuff implements Seller{
-
-
-    public Supplier(String name, PersonalType personalType, String nationality, String personalInfo, double salary, double bankAccount) {
-        super(name, personalType, nationality, personalInfo, salary, bankAccount);
-    }
+public class Supplier extends Individual implements Sellable {
 
     //
 
-
+    public Supplier(String name, PersonalType personalType, String nationality, String personalInfo) {
+        super(name, personalType, nationality, personalInfo);
+    }
 
 
     @Override
-    public void sell() {
+    public void sell(Casse casse, double contractAmount) {
         //
     }
 }
