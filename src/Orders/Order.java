@@ -1,29 +1,32 @@
 package Orders;
 
 import Goods.GoodType;
+import Individuals.PersonalType;
 
 public class Order {
 
-    private GoodType goodType;//
-    private String productName;//
+    private GoodType goodType;
+    private String productName;
     private double totalAmount;
     private int number;
     private int quantity;
     private OrderActivity orderActivity;
+    private PersonalType personalType;
 
 
-    public Order(GoodType goodType, String productName, double totalAmount, int number, int quantity) {
+    public Order(GoodType goodType, String productName, double totalAmount, int number, int quantity, PersonalType personalType) {
         this.productName = productName;
         this.goodType = goodType;
         this.totalAmount = totalAmount;
         this.number = number;
         this.quantity = quantity;
         this.orderActivity = OrderActivity.ACTIVE;
+        this.personalType = personalType;
     }
 
     public void showOrder(){      // za da si proverqva customera poruchkite
-        System.out.printf("Order number[%d][%s]: %s-\"%s\", quantity: %d. Total amount: %.2f \n",
-                getNumber(), orderActivity, getGoodType(), getProductName(), getQuantity(), getTotalAmount());
+        System.out.printf("Order number[%d][%s]: %s-\"%s\", quantity: %d. Total amount: %.2f. Made from: [%s]\n",
+                getNumber(), orderActivity, getGoodType(), getProductName(), getQuantity(), getTotalAmount(), getPersonalType());
     }
 
 
@@ -60,7 +63,7 @@ public class Order {
         return productName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public PersonalType getPersonalType() {
+        return personalType;
     }
 }

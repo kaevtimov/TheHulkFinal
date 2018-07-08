@@ -1,4 +1,4 @@
-package Individuals;
+package Invoice;
 
 public enum InvoiceType {
 

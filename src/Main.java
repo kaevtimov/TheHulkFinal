@@ -1,60 +1,63 @@
 import Goods.*;
 import Individuals.*;
-import Orders.OrderActivity;
 import Orders.PayType;
 
 public class Main {
 
-    public static void main(String[] args) {
-//coment
+    public static void main(String[] args) throws MyCustomException {
 
-        //pravim si sklad, customer, admin, kasa
 
-        Warehouse warehouse = new Warehouse("TheHulk");
-        Casse warehouseCasse = new Casse(2500, 0);
-        Administrator admin = new Administrator("Stefcho Pavlov", PersonalType.PERSON, "BG", "Employer");
-        Customer customer = new Customer("Danny Garcia", 60, PersonalType.PERSON, "BG", "adress", CustomerType.LONGTIME);
+        //pravim si BOSS, sklad, case, admins, customer, supplier
+
+        Boss boss = new Boss("Ivan Ivanov", PersonalType.BOSS, "BG", "info");
+        Administrator admin = new Administrator("Stefcho", 2500, PersonalType.ADMINISTRATOR, "BG", "info");
+        Customer customer = new Customer("Pencho Tenev", 600, PersonalType.CUSTOMER, "BG", "adress", CustomerType.LONGTIME);
+        Customer customer2 = new Customer("Harry Kane", 6000, PersonalType.CUSTOMER, "BG", "adress", CustomerType.PARTTIME);
+        Supplier supplier = new Supplier(PersonalType.SUPPLIER);
+
+        Warehouse warehouse = new Warehouse("TheHulk");            // KE
+        Case warehouseCase = new Case(2500000,0);        // KE
+
+        boss.investWarehouseAndCase();
+
+//        System.out.println(customer);
+//        System.out.println(customer2);
+//        System.out.println(admin);
+//        System.out.println(boss);
+
+
+        warehouseCase.checkBalance();
+
+        //podrejdame kataloga
+        boss.setUpCatalog(warehouse);
+
 
         // zarejdame sklada s produkti
+        warehouse.checkProductsQuantity(admin, supplier, warehouseCase);
+        System.out.println();
+//        warehouse.checkProductsQuantity(admin, supplier, warehouseCase);
+//        System.out.println();
+        warehouseCase.checkBalance();
+//        System.out.println();
+        //System.out.println(warehouseCase.getOutcome());
 
-        warehouse.addAlcohol("Shumensko", 1.00, 50, "28.05.2018", "By special bulgarian reciepe...",
-                GoodType.ALCOHOL, 4.6, AlcoholType.BEER, PackageType.BOTTLED);
-        warehouse.addSoftDrink("Pepsi", 1.20, 65, "07.05.2019", "Coca-Cola forever!", GoodType.SOFTDRINK,
-                SoftDrinkType.FIZZY);
-        warehouse.addFood("potatoe", 2.50, 15, "27.02.2018", "potatoes info", FoodType.BIO, GoodType.FOOD);
-        warehouse.addDomesticProducts("table", 25.59, 25, "28.05.2035", "tables info", DomesticType.FURNITURE,
-                GoodType.DOMESTIC);
 
-        // proverqvame kakvo ima v sklada
-        warehouse.showCatalog();
 
         // customera otiva i kazva kakvo tursi, a admina proverqva po ime i po nalichnost dali ima v sklada
-        warehouse.searchInWarehouse(customer, admin, 25, GoodType.SOFTDRINK, "pepsi");
-        warehouse.searchInWarehouse(customer, admin, 25, GoodType.FOOD, "Potatoe");
+        // posle customera constructCustomerRequests();   kato si adva v zaqvkata
+        warehouse.searchInWarehouse(customer, admin, warehouseCase);     // chisloto  e za broq na poruchkite
+        System.out.println();
+//        warehouse.searchInWarehouse(customer2, admin, warehouseCase);   // probvame s vtori customer
+//        System.out.println();
 
 
-        // customura zapochva da konstruira poruchki i da podgotvq zaqvka predi da skliuchi dogovora
-        warehouse.constructOrder(customer, "pepsi", GoodType.SOFTDRINK, 25);
-        warehouse.constructOrder(customer, "Potatoe", GoodType.FOOD, 5);
-        System.out.println();
-//
-//        //proverqva si poruchkite predi da gi zaqvi
-        customer.checkOrder();
-        System.out.println();
-//
-//        // customera se otkazva ot poruchkata predi da podpishe, t.e. maha gi ot zaqvkata si
-        customer.cancelOrder(1);
-        customer.checkOrder();
-        System.out.println();
-//
-//        // finaliziraneto na poruchkite i podpisvaneto na dogovora po napravenata zaqvka!
-        warehouse.finalizeOrder(customer, admin, warehouseCasse, PayType.CASH);
-        System.out.println(customer.getBudget());
-        warehouseCasse.checkBalance();
-        warehouse.showOrders();
-        warehouse.showCatalog();
+        // sled podpisvaneto na dogovora proverqvame
+//        System.out.println(customer.getBudget());
+//        System.out.println(customer2.getBudget());
+//        warehouseCase.checkBalance();
+//        warehouse.showOrders();
+//        warehouse.showCatalog();
 
 
-        System.out.println();
     }
 }

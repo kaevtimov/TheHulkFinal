@@ -2,6 +2,6 @@ package Individuals;
 
 public enum PersonalType {
 
-    PERSON, COMPANY
+    CUSTOMER, ADMINISTRATOR, SUPPLIER, BOSS
 
 }

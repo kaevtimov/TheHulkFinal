@@ -1,21 +1,21 @@
 package Individuals;
 
-public class Casse {
+public class Case {
 
     private double income;
     private double outcome;
-    //private AL<Invoice> invoices;
 
-    public Casse(double income, double outcome) {
+    public Case(double income, double outcome) {
         this.income = income;
         this.outcome = outcome;
     }
 
-    public double getIncome() {
+
+    double getIncome() {
         return income;
     }
 
-    public void setIncome(double income) {
+    void setIncome(double income) {
         this.income = income;
     }
 
@@ -30,20 +30,21 @@ public class Casse {
     public void checkBalance(){      // proverqvame kak e balansa na sklada
         if(outcome > income){
             // ako sme vuv falit
-            System.out.printf("Warehouse BALANCE:[%.2f]! We are very sorry to announce you that our beautiful warehouse must open a bankruptcy proceedings!\n"
-                    , outcome-income);
+            System.out.printf("[DANGER!] Warehouse BALANCE:[%.2f]! \n"
+                    , income - outcome);
         }else if(outcome==income){
             // ako sme pred falit
-            System.out.println("DANGER! Warehouse is nearly to bankrupt!");
+            System.out.println("[DANGER!] Warehouse is nearly to bankrupt!");
         }else{
             // ako sme dobre
             System.out.printf("Warehouse BALANCE:[%.2f]. We are on a right way!\n", income-outcome);
         }
     }
 
-//    public void lookInvoices(){                 // pokazva ni info za vsichki fakturi
-//        for (Invoice invoice:invoices) {
-//            invoice.showInvoice();
-//        }
-//    }
+    public static class MyCustomException extends Exception{
+
+        public MyCustomException(String message){
+            super(message);
+        }
+    }
 }

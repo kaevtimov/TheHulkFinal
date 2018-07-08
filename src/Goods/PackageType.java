@@ -2,5 +2,5 @@ package Goods;
 
 public enum PackageType {
 
-    BOTTLED, POURING
+    BOTTLED, POURING, FREEZED, FRESH // RP dobaveni za food, alcohol, softdrink
 }

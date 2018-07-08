@@ -1,4 +1,4 @@
-package Individuals;
+package Invoice;
 
 import Goods.GoodType;
 
