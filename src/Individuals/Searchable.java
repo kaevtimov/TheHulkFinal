@@ -4,5 +4,5 @@ import Goods.GoodType;
 
 public interface Searchable {
 
-    void searchableProduct(String name, int quantity, GoodType goodType);
+    void searchProduct(String productName, int quantity, GoodType goodType);
 }

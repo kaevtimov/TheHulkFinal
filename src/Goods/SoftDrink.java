@@ -3,32 +3,26 @@ package Goods;
 public class SoftDrink extends Drinks {
 
     private SoftDrinkType softDrinkType;
-    private double deliveryPrice;
+    private PackageType packageType;            // trqbva li ni izobshto? // RP dobaveno v Alcohol, SoftDrinks i Food
 
-    public SoftDrink(String name, int quantity, GoodType goodType, SoftDrinkType softDrinkType){      // construktor za poruchkite
-        super(name, quantity, goodType);
+    public SoftDrink(String name, double priceWarehouse, int totalQuantity, GoodType goodType, SoftDrinkType softDrinkType, PackageType packageType) {
+        super(name, priceWarehouse, totalQuantity, goodType);
         this.softDrinkType = softDrinkType;
+        this.packageType = packageType;
     }
 
-
-    public SoftDrink(String name, double priceWarehouse, int quantity, String expDate, String productInfo,
-                     GoodType goodType, SoftDrinkType softDrinkType) {
-        super(name, priceWarehouse, quantity, expDate, productInfo, goodType);
-        this.softDrinkType = softDrinkType;
-        this.deliveryPrice = 0.30;       // na edinica napitka
-    }
-
-    public SoftDrinkType getSoftDrinkType() {
+    private SoftDrinkType getSoftDrinkType() {
         return softDrinkType;
     }
 
-    public void setSoftDrinkType(SoftDrinkType softDrinkType) {
-        this.softDrinkType = softDrinkType;
-    }
+    public PackageType getPackageType() { return packageType;  }
+
 
     @Override
     public void showProduct() {
-        System.out.printf("This is %s-%s \"%s\", price: %.2f, total amount of quantity: %d and expiration date: %s. %s\n",
-                getGoodType(), getSoftDrinkType(), getName(), getPriceWarehouse(), getTotalQuantity(), getExpDate(), getProductInfo());
+        System.out.printf("[%s][%s] [\"%s\"], price: %.2f, quantity: %d, package: %s.\n",
+                getGoodType(), getSoftDrinkType(), getName(), getPriceWarehouse(), getTotalQuantity(), getPackageType() );
+        System.out.println(); // RP dobaven Package Type v metoda
     }
 }
+

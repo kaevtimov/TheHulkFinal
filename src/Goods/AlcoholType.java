@@ -2,5 +2,5 @@ package Goods;
 
 public enum AlcoholType {
 
-    BEER, HARD
+    BEER, WHISKEY, VODKA, WINE
 }
