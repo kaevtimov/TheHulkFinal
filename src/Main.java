@@ -15,8 +15,8 @@ public class Main {
         Customer customer2 = new Customer("Harry Kane", 6000, PersonalType.CUSTOMER, "BG", "adress", CustomerType.PARTTIME);
         Supplier supplier = new Supplier(PersonalType.SUPPLIER);
 
-        Warehouse warehouse = new Warehouse("TheHulk");          
-        Case warehouseCase = new Case(2500000,0);   
+        Warehouse warehouse = new Warehouse("TheHulk");
+        Case warehouseCase = new Case(2500000,0);
 
         boss.investWarehouseAndCase();
 
@@ -61,3 +61,4 @@ public class Main {
 
     }
 }
+
