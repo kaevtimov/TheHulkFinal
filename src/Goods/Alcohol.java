@@ -3,7 +3,7 @@ package Goods;
 public class Alcohol extends Drinks{
 
     private double alcoholContaining;
-    private PackageType packageType;           // RP dobaveno v Alcohol, SoftDrinks i Food
+    private PackageType packageType;      
     private AlcoholType alcoholType;
 
 
@@ -27,7 +27,7 @@ public class Alcohol extends Drinks{
 
     @Override
     public void showProduct() {
-        System.out.printf("[%s][%s] [\"%s\"], price: %.2f, quantity: %d, package: %s, alcohol: %.2f procent.\n", // RP sakraten txt
+        System.out.printf("[%s][%s] [\"%s\"], price: %.2f, quantity: %d, package: %s, alcohol: %.2f procent.\n", 
                 getGoodType(), getAlcoholType(), getName(), getPriceWarehouse(), getTotalQuantity(), getPackageType(), getAlcoholContaining());
         System.out.println();
     }
