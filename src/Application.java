@@ -1,6 +1,5 @@
-import Goods.*;
+
 import Individuals.*;
-import Orders.PayType;
 
 public class Application {
 
