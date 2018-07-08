@@ -113,11 +113,8 @@ public class Warehouse {
         // dobavil sum custom exception ako se vuvedut otricatelni chisla
         System.out.printf("Hello, %s!\n", customer.getName());
         while (true) {
-            //избор на типа продукт
 
             GoodType goodType = GoodType.valueOf(choosingGoodType());
-
-            //избор на марка на продукт
 
             String productName = "";
             switch (goodType) {
