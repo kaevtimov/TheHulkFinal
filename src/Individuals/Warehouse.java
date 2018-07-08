@@ -14,10 +14,10 @@ public class Warehouse {
 
     private String name;
     private ArrayList<Good> inventory;
-    private ArrayList<Alcohol> alcoholInventory;         
-    private ArrayList<SoftDrink> softDrinkInventory;      
-    private ArrayList<Food> foodsInventory;           
-    private ArrayList<Domestic> domesticProductsInventory;  
+    private ArrayList<Alcohol> alcoholInventory;
+    private ArrayList<SoftDrink> softDrinkInventory;
+    private ArrayList<Food> foodsInventory;
+    private ArrayList<Domestic> domesticProductsInventory;
     private ArrayList<Order> warehouseOrders;
     private ArrayList<Good> toBeReload;               // tova e AL za kakvo da se porucha ot suppliera
 
@@ -70,7 +70,7 @@ public class Warehouse {
     public void showOrders(){                   // pokazva ni poruchkite v sklada i tqhnata aktivnost
         for (Order order:warehouseOrders) {
             order.showOrder();
-        }  // moje tuk exception
+        }
     }
 
     // addvame produktite puvo v cataloga s quantity 0, i posle gi zarejdame ot proizvoditelite
@@ -79,7 +79,6 @@ public class Warehouse {
         Alcohol alcohol = new Alcohol(name, priceWarehouse, totalQuantity, goodType, alcoholContaining, alcoholType, packageType);
         inventory.add(alcohol);
         alcoholInventory.add(alcohol);
-        //toBeReload.add(alcohol);        // da gi vkarame napravo za zarejdane zashtoto nali sa s quantity 0
     }
 
     void addSoftDrink(String name, double priceWarehouse, int totalQuantity, GoodType goodType, SoftDrinkType softDrinkType,
@@ -103,11 +102,9 @@ public class Warehouse {
     }
 
 
-    private void checkDigit(int digit)throws MyCustomException {  
+    private void checkDigit(int digit)throws MyCustomException {
         if(digit <= 0){
             throw new MyCustomException("You must enter a integer bigger than 0!!!");   // za chislata s enumeraciite
-        if(digit < 0){
-            throw new MyCustomException("You must enter a valid Integer!!!");   // za chislata s enumeraciite
         }
     }
 
@@ -115,7 +112,7 @@ public class Warehouse {
     public void searchInWarehouse(Customer customer, Administrator admin, Case casse) throws MyCustomException {     //throws MyCustomException
         // dobavil sum custom exception ako se vuvedut otricatelni chisla
         System.out.printf("Hello, %s!\n", customer.getName());
-        while (true) {  
+        while (true) {
             //избор на типа продукт
 
             GoodType goodType = GoodType.valueOf(choosingGoodType());
@@ -150,10 +147,9 @@ public class Warehouse {
             }
 
             scanner.nextLine();
-
             int quantity = 0;
             boolean inputCorrectQuantity = false;
-            while(!inputCorrectQuantity) {               // dokato ne vuvede INTEGER go karame da pishe   :D
+            while(!inputCorrectQuantity) {               // dokato ne vuvede INTEGER go karame da pishe
                 try{                          //MyCustomException
                     System.out.println("Now please enter the desired quantity:");
                     quantity = scanner.nextInt();
@@ -166,7 +162,6 @@ public class Warehouse {
                 }
                 catch (MyCustomException mce) {             // dobaven custom exception za quantity, ako se vuvede otricatelno chislo
                     System.out.println("You must enter a integer bigger than 0!!!");
-                    System.out.println("You must enter a positive Integer!!!");
                     scanner.nextLine();
                 }
             }
@@ -193,15 +188,13 @@ public class Warehouse {
                     if(answer.equalsIgnoreCase("yes")){
                         System.out.printf("Please enter new quantity under %d.\n",good.getTotalQuantity());
                         // i tuk trqbva da se hvane otricatelen exception
-                        int newQuantity = 0;                              
+                        int newQuantity = 0;
                         boolean inputNewQuantity = false;
-                        while(!inputCorrectQuantity) {               // dokato ne vuvede INTEGER go karame da pishe  
+                        while(!inputCorrectQuantity) {               // dokato ne vuvede INTEGER go karame da pishe   :D
                             try{                          //MyCustomException
                                 System.out.println("Now please enter the desired quantity:");
                                 newQuantity = scanner.nextInt();
-                                if(newQuantity == 0){                                 // ako vuvede chislo ne ot 1-4
-                                    System.out.println("Enter a number that is bigger than 0!!");      // dobaveno sega
-                                }
+
                                 checkDigit(newQuantity);
                                 break;
                             }
@@ -211,7 +204,6 @@ public class Warehouse {
                             }
                             catch (MyCustomException mce) {             // dobaven custom exception za quantity, ako se vuvede otricatelno chislo
                                 System.out.println("You must enter a integer bigger than 0!!!");
-                                System.out.println("You must enter a positive Integer!!!");
                                 scanner.nextLine();
                             }
                         }
@@ -221,9 +213,8 @@ public class Warehouse {
                         break;
                     }                                                                                                                 // do tuk promeneno
                 }
-            }
-            if(contains==false){ System.out.println("The product doesn't appear in our catalog!");}// tova izpisva ako jelaniq produkt go nqmame v kataloga
-            System.out.println("Would you like to continue? Y/N");  // dobaveno!
+            }if(contains==false){ System.out.println("The product doesn't appear in our catalog!");}// tova izpisva ako jelaniq produkt go nqmame v kataloga
+            System.out.println("Would you like to continue? Y/N");
             String answerCustomer = scanner.nextLine();
             if (answerCustomer.equalsIgnoreCase("y")
                     || answerCustomer.equalsIgnoreCase("yes")) {
@@ -236,7 +227,7 @@ public class Warehouse {
 
         int numberOfCustomerRequests = customer.getCustomerOrders().size();  //kolko requesti ima
         do {
-            System.out.println("Do you want to check your requests? Y/N");        // dobaveno
+            System.out.println("Do you want to check your requests? Y/N");
             String answerCustomer = scanner.nextLine();
             if (answerCustomer.equalsIgnoreCase("y")
                     || answerCustomer.equalsIgnoreCase("yes")) {
@@ -245,7 +236,7 @@ public class Warehouse {
                 break;
             }
 
-            if(!customer.getCustomerOrders().isEmpty()){                                  // dobaveno sega
+            if(!customer.getCustomerOrders().isEmpty()){
                 if(numberOfCustomerRequests > 0){
                     System.out.println("Do you want to cancel any request Yes/No?");        // dobaveno  samo ako ima nqkakvi zaqvki
                     String answerCancel = scanner.nextLine();
@@ -270,12 +261,12 @@ public class Warehouse {
                 }
             }
             if(canSign==true){
-                System.out.println("Do you want to sign contract now Yes/No?");       
+                System.out.println("Do you want to sign contract now Yes/No?");
                 String answerSign = scanner.nextLine();
                 if(answerSign.equalsIgnoreCase("yes")){
                     finalizeOrder(customer,admin,casse);
                 }else{
-                    System.out.println("Customer refuses to sign.. and he walks away...");  
+                    System.out.println("Customer refuses to sign.. and he walks away...");
                 }
             }else{
                 System.out.println("You have no requests to sign a contract. Have a nice day!");
@@ -304,7 +295,7 @@ public class Warehouse {
             try{                          //MyCustomException
                 n = scanner.nextInt();
                 if(n == 0 || n > 5){                                 // ako vuvede chislo ne ot 1-4
-                    System.out.println("Enter a number from 1-5!!");   
+                    System.out.println("Enter a number from 1-5!!");
                 }
                 checkDigit(n);
                 // избор на тип стока
@@ -353,7 +344,7 @@ public class Warehouse {
             i++;
         }
 
-        System.out.println("The system expects your choice");  
+        System.out.println("The system expects your choice");
         int n = 0;
 
         do { //проверка числото да е в обхвата на колекцията Алкохол
@@ -364,8 +355,7 @@ public class Warehouse {
                     break;
                 } else {
                     System.out.println();
-                    System.out.printf("Enter a number from 1- %d!!", i-1);   
-                    System.out.printf("Enter a number from 1 - %d!!", i - 1);    
+                    System.out.printf("Enter a number from 1- %d!!", i-1);
                 }
             }catch(InputMismatchException ime){
                 System.out.println("You must enter a integer!");
@@ -412,8 +402,7 @@ public class Warehouse {
                     break;
                 } else {
                     System.out.println();
-                    System.out.printf("Enter a number from 1- %d!!", i-1);     
-                    System.out.printf("Enter a number from 1- %d!!", i);    
+                    System.out.printf("Enter a number from 1- %d!!", i-1);
                 }
             }catch(InputMismatchException ime){
                 System.out.println("You must enter a integer!");
@@ -458,8 +447,7 @@ public class Warehouse {
                     break;
                 } else {
                     System.out.println();
-                    System.out.printf("Enter a number from 1- %d!!", i-1);  
-                    System.out.printf("Enter a number from 1- %d!!", i);      
+                    System.out.printf("Enter a number from 1- %d!!", i-1);
                 }
             }catch(InputMismatchException ime){
                 System.out.println("You must enter a integer!");
@@ -504,8 +492,7 @@ public class Warehouse {
                     break;
                 } else {
                     System.out.println();
-                    System.out.printf("Enter a number from 1- %d!!", i-1);     
-                    System.out.printf("Enter a number from 1- %d!!", i);    
+                    System.out.printf("Enter a number from 1- %d!!", i-1);
                 }
             }catch(InputMismatchException ime){
                 System.out.println("You must enter a integer!");
@@ -578,13 +565,13 @@ public class Warehouse {
             int choiceOfPayType = 0;
             PayType payType = null;
             boolean inputCorrect = false;
-            while(!inputCorrect){               // dokato ne vuvede INTEGER go karame da pishe 
+            while(!inputCorrect){               // dokato ne vuvede INTEGER go karame da pishe
                 try{            // mycustomexception
                     choiceOfPayType = scanner.nextInt();
                     if(choiceOfPayType > 3 || choiceOfPayType==0){
                         System.out.println("Enter a correct number!");
                     }
-                    checkDigit(choiceOfPayType);  
+                    checkDigit(choiceOfPayType);   // dobaveno
                     switch (choiceOfPayType) {
                         case 1: payType = PayType.CREDIT;
                             inputCorrect=true;
@@ -602,7 +589,7 @@ public class Warehouse {
                     System.out.println("You must enter a integer!");
                     scanner.nextLine();
                 }
-                catch(MyCustomException mce){                                   
+                catch(MyCustomException mce){
                     System.out.println("Enter a positive number!");
                     scanner.nextLine();
                 }
