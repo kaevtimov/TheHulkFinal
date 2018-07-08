@@ -9,7 +9,8 @@ Project purpose
 The project represents business demo application for creating a warehouse. The created warehouse includes a various of good 
 types, maintaining available quantities and user interface for customer service.
 
-Class diagram of your types –
+Class diagram of your types – 
+![Image of Yaktocat](https://github.com/kaevtimov/TheHulkFinal/blob/master/Diagram.bmp)
 
 The URL of your Git repository –  https://github.com/kaevtimov/TheHulkFinal
 
