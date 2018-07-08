@@ -28,7 +28,7 @@ public class Boss extends Individual{
 
 
     // boss fills the different products in the warehouse in the begging; only the boss could add type of products
-    public void setUpCatalog(Warehouse warehouse){                        // s nulevo kolichestvo
+    public void setUpCatalog(Warehouse warehouse){
         warehouse.addAlcohol("Scotch RedLabel", 19.99, 0, GoodType.ALCOHOL, 40, AlcoholType.WHISKEY, PackageType.BOTTLED);
         warehouse.addAlcohol("vodka Smirnoff", 12.99, 0, GoodType.ALCOHOL, 40, AlcoholType.VODKA, PackageType.BOTTLED);
         warehouse.addAlcohol("beer Shumensko", 1.20, 0, GoodType.ALCOHOL, 4.3, AlcoholType.BEER, PackageType.BOTTLED);

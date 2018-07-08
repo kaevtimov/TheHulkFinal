@@ -15,7 +15,7 @@ public class SoftDrink extends Drinks {
         return softDrinkType;
     }
 
-    public PackageType getPackageType() { return packageType;  }
+    private PackageType getPackageType() { return packageType;  }
 
 
     @Override

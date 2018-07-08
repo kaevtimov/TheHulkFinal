@@ -6,7 +6,7 @@ public class Application {
     public static void main(String[] args) throws MyCustomException {
 
 
-        //pravim si BOSS, sklad, case, admins, customer, supplier
+        // we need to set up the warehouse, the warehouse case, the boss, customers, administrators, suppliers
 
         Boss boss = new Boss("Ivan Ivanov", PersonalType.BOSS, "BG", "address: Sofia, EGN: 0000000000");
         Administrator admin = new Administrator("Stefcho", 2500, PersonalType.ADMINISTRATOR, "BG", "info");
@@ -17,6 +17,7 @@ public class Application {
         Warehouse warehouse = new Warehouse("TheHulk");
         Case warehouseCase = new Case(2500000,0);
 
+        // the boss sets up the warehouse and the case
         boss.investWarehouseAndCase();
 
         System.out.println(customer);
@@ -25,37 +26,34 @@ public class Application {
         System.out.println(boss);
 
 
+        // we need to check the starting balance of the warehouse
         warehouseCase.checkBalance();
 
-        //podrejdame kataloga
+        // the boss setting up the warehouse catalog and showing it to the world
         boss.setUpCatalog(warehouse);
+        warehouse.showCatalog();
 
 
-        // zarejdame sklada s produkti
+        // we need to check the products quantity and if any we need to reload them
         warehouse.checkProductsQuantity(admin, supplier, warehouseCase);
-//        System.out.println();
-//        warehouse.checkProductsQuantity(admin, supplier, warehouseCase);
-//        System.out.println();
-//        warehouseCase.checkBalance();
-//        System.out.println();
-        //System.out.println(warehouseCase.getOutcome());
+        System.out.println();
 
 
 
-        // customera otiva i kazva kakvo tursi, a admina proverqva po ime i po nalichnost dali ima v sklada
-        // posle customera constructCustomerRequests();   kato si adva v zaqvkata
-        warehouse.searchInWarehouse(customer, admin, warehouseCase);     // chisloto  e za broq na poruchkite
-//        System.out.println();
-//        warehouse.searchInWarehouse(customer2, admin, warehouseCase);   // probvame s vtori customer
-//        System.out.println();
+        // starting the procedure of searching products in the warehouse with acting the two customers
+        warehouse.searchInWarehouse(customer, admin, warehouseCase);
+        System.out.println();
+        warehouse.searchInWarehouse(customer2, admin, warehouseCase);
+        System.out.println();
 
 
-        // sled podpisvaneto na dogovora proverqvame
-//        System.out.println(customer.getBudget());
-//        System.out.println(customer2.getBudget());
-//        warehouseCase.checkBalance();
-     warehouse.showOrders();
-       warehouse.showCatalog();
+        // after the customers are ready with their contracts we can check their budgets and the warehouse income/outcome balance
+        System.out.println(customer.getBudget());
+        System.out.println(customer2.getBudget());
+        warehouseCase.checkBalance();
+
+        //and finally we can see all the orders that have been made in the warehouse
+        warehouse.showOrders();
 
 
     }

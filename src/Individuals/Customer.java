@@ -35,7 +35,7 @@ public class Customer extends Individual implements Orderable, Searchable, Payab
         return counterOrderNumberCustomer;
     }
 
-    public static void setCounterOrderNumberCustomer(int counterOrderNumberCustomer) {
+    static void setCounterOrderNumberCustomer(int counterOrderNumberCustomer) {
         Customer.counterOrderNumberCustomer = counterOrderNumberCustomer;
     }
 
@@ -80,7 +80,7 @@ public class Customer extends Individual implements Orderable, Searchable, Payab
     }
 
 
-    public void checkRequests(){                     // customer could check his orders
+    void checkRequests(){                     // customer could check his orders
         if(!customerOrders.isEmpty()){
             for (Order order:customerOrders) {
                 order.showOrder();
@@ -92,14 +92,14 @@ public class Customer extends Individual implements Orderable, Searchable, Payab
 
     private void checkDigit(int digit)throws MyCustomException {   // check exeption for valid integer choice
         if(digit < 0){
-            throw new MyCustomException();   // za chislata pri cancel
+            throw new MyCustomException();
         }
     }
     //"You must enter a valid number from list below"
 
     public void cancelRequest(){    // customer could cancel orders before signing contract
         Scanner scanner = new Scanner(System.in);
-        if(!getCustomerOrders().isEmpty()){         // dobaveno (samo ako ima zaqvki)
+        if(!getCustomerOrders().isEmpty()){
             System.out.println("Which request you want to remove from orders list?");
             int requestNumber = 0;
             try{
@@ -107,10 +107,8 @@ public class Customer extends Individual implements Orderable, Searchable, Payab
                 checkDigit(requestNumber);
             }catch (MyCustomException mce){
                 System.out.println("Enter a positive number!");
-                //scanner.nextLine();
             }catch (InputMismatchException ime){
                 System.out.println("Enter a number!");
-                //scanner.nextLine();
             }
             boolean hasNumber = false;
             for (Order order:customerOrders) {

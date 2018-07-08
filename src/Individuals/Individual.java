@@ -12,7 +12,7 @@ public class Individual {
         this.nationality = nationality;
         this.personalInfo = personalInfo;
     }
-    public Individual(PersonalType personalType){
+    Individual(PersonalType personalType){
         this.personalType = personalType;
     }
 
@@ -26,11 +26,11 @@ public class Individual {
         return personalType;
     }
 
-    public String getNationality() {
+    String getNationality() {
         return nationality;
     }
 
-    public String getPersonalInfo() {
+    String getPersonalInfo() {
         return personalInfo;
     }
 }

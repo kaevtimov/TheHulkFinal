@@ -23,7 +23,7 @@ public class Alcohol extends Drinks{
         return alcoholType;
     }
 
-    public PackageType getPackageType() { return packageType;  }
+    private PackageType getPackageType() { return packageType;  }
 
     @Override
     public void showProduct() {

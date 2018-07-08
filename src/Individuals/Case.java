@@ -19,11 +19,11 @@ public class Case {
         this.income = income;
     }
 
-    public double getOutcome() {
+    double getOutcome() {
         return outcome;
     }
 
-    public void setOutcome(double outcome) {
+    void setOutcome(double outcome) {
         this.outcome = outcome;
     }
 
@@ -32,14 +32,11 @@ public class Case {
     public void checkBalance(){
         System.out.println();
         if(outcome > income){
-            // ako sme vuv falit
             System.out.printf("[DANGER!] Warehouse BALANCE:[%.2f]! \n"
                     , income - outcome);
         }else if(outcome==income){
-            // ako sme pred falit
             System.out.println("[DANGER!] Warehouse is nearly to bankrupt!");
         }else{
-            // ako sme dobre
             System.out.printf("Warehouse BALANCE:[%.2f]. We are on a right way!\n", income-outcome);
         }
         System.out.println();

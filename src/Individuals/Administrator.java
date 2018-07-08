@@ -24,15 +24,15 @@ public class Administrator extends Individual implements Orderable, Sellable, Se
 
     }
 
-    public ArrayList<Order> getAdminOrders() {
+    ArrayList<Order> getAdminOrders() {
         return adminOrders;
     }
 
-    public double getSalary() {
+    private double getSalary() {
         return salary;
     }
 
-    public void setSalary(double salary) {
+    private void setSalary(double salary) {
         this.salary = salary;
     }
 

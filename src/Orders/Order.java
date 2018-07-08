@@ -63,7 +63,7 @@ public class Order {
         return productName;
     }
 
-    public PersonalType getPersonalType() {
+    private PersonalType getPersonalType() {
         return personalType;
     }
 }

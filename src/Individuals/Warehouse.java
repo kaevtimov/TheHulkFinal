@@ -10,7 +10,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Warehouse {
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
     private String name;
     private ArrayList<Good> inventory;
@@ -59,7 +59,7 @@ public class Warehouse {
         System.out.println("-------------------------------------------------------------------------------------");
     }
 
-    public void toBeReload(){                 // checl the list for reloading from supplier
+    public void toBeReload(){                 // check the list for reloading from supplier
         for (Good good:toBeReload) {
             System.out.printf("Product to reload: %s - %s, quantity: %d.\n", good.getName(), good.getGoodType(), good.getTotalQuantity());
         }
@@ -111,7 +111,7 @@ public class Warehouse {
 
 
     public void searchInWarehouse(Customer customer, Administrator admin, Case casse) throws MyCustomException {
-        //throws MyCustomException for not possitiv number in input
+        //throws MyCustomException for not positive number in input
         System.out.printf("Hello, %s!\n", customer.getName());
         while (true) {
             GoodType goodType = GoodType.valueOf(choosingGoodType());
@@ -139,7 +139,7 @@ public class Warehouse {
             }
 
             if (productName.equals("OTHER") || productName.equals("")) {
-                System.out.println("We will load soon. Welcome back again!");
+                System.out.println("We will load soon. Try with the listed goods!");
                 continue;
             }
 
@@ -222,7 +222,7 @@ public class Warehouse {
         }
 
 
-        int numberOfCustomerRequests = customer.getCustomerOrders().size();  //couter for all customer requests
+        int numberOfCustomerRequests = customer.getCustomerOrders().size();  //counter for all customer requests
         do {
             System.out.println("Do you want to check your requests? (Yes/No)");
             String answerCustomer = scanner.nextLine();
@@ -235,7 +235,7 @@ public class Warehouse {
 
             if(!customer.getCustomerOrders().isEmpty()){
                 if(numberOfCustomerRequests > 0){
-                    System.out.println("Do you want to cancel any request? (Yes/No)");    //appiars only when have request
+                    System.out.println("Do you want to cancel any request? (Yes/No)");    //appears only when have request
                     String answerCancel = scanner.nextLine();
                     if(answerCancel.equalsIgnoreCase("yes") || answerCancel.equalsIgnoreCase("y")){
                         customer.cancelRequest();
@@ -274,7 +274,7 @@ public class Warehouse {
     }
 
 
-    public String choosingGoodType(){
+    private String choosingGoodType(){
         String choice = "";
         boolean isCorrectNumber = false;
         int i = 1;
@@ -295,7 +295,7 @@ public class Warehouse {
                     System.out.println("Enter a number from 1-5!");
                 }
                 checkDigit(n);
-                // избор на тип стока
+                // choice of good type
                 switch (n) {
                     case 1:
                         choice = "ALCOHOL";
@@ -330,7 +330,7 @@ public class Warehouse {
         return choice;
     }
 
-    public String choiceOfAlcoholInventory() { // shows users choice for good trademarks
+    private String choiceOfAlcoholInventory() { // shows users choice for good trademarks
         System.out.println();
         System.out.println("Please enter product name:");
         String choice = "";
@@ -352,7 +352,7 @@ public class Warehouse {
                     break;
                 } else {
                     System.out.println();
-                    System.out.printf("Enter a number from 1- %d!!", i-1);
+                    System.out.printf("Enter a number from 1- %d!!\n", i-1);
                 }
             }catch(InputMismatchException ime){
                 System.out.println("You must enter a number!");
@@ -377,7 +377,7 @@ public class Warehouse {
 
 
 
-    public String choiceOfFoodInventory() { // shows users choice for good trademarks
+    private String choiceOfFoodInventory() { // shows users choice for good trademarks
         System.out.println();
         System.out.println("Please enter product name:");
         String choice = "";
@@ -422,7 +422,7 @@ public class Warehouse {
         return choice;
     }
 
-    public String choiceOfSoftDrinkInventory() { // shows the choice for softdrinks marks
+    private String choiceOfSoftDrinkInventory() { // shows the choice for softdrinks marks
         System.out.println();
         System.out.println("Please enter product name:");
         String choice = "";
@@ -467,7 +467,7 @@ public class Warehouse {
         return choice;
     }
 
-    public String choiceOfDomesticInventory() { // // shows the choice for domestics marks
+    private String choiceOfDomesticInventory() { // // shows the choice for domestics marks
         System.out.println();
         System.out.println("Please enter product name:");
         String choice = "";
@@ -516,7 +516,7 @@ public class Warehouse {
 
 
     // prepare the requested order when it's made.
-    public void constructCustomerRequest(Customer customer, String productName, GoodType goodType, int quantity){
+    private void constructCustomerRequest(Customer customer, String productName, GoodType goodType, int quantity){
         double orderValue = 0;
         for (Good good:inventory) {
             if(good.getName().equalsIgnoreCase(productName) && good.getTotalQuantity() >= quantity) {
@@ -530,7 +530,7 @@ public class Warehouse {
 
 
 
-    public void finalizeOrder(Customer customer, Administrator admin, Case aCase)  {
+    private void finalizeOrder(Customer customer, Administrator admin, Case aCase)  {
         System.out.printf("- %s wants to proceed and sign a Order contract for the requests!\n", customer.getName());
         // put the customer order in the warehouse orders
         double contractAmount = 0;       //the start value of the contract is 0
@@ -627,7 +627,7 @@ public class Warehouse {
         }
     }
 
-    public void contactProducers(Administrator admin, Supplier supplier, Case casse) {
+    private void contactProducers(Administrator admin, Supplier supplier, Case casse) {
         double total = 0;
         System.out.printf("Admin %s processing contact with producers..\n", admin.getName());
         for (Good good : toBeReload) {
