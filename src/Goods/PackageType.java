@@ -2,5 +2,5 @@ package Goods;
 
 public enum PackageType {
 
-    BOTTLED, POURING, FREEZED, FRESH 
+    BOTTLED, POURING, FREEZED, FRESH // goods.domestic do not have package type
 }

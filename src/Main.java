@@ -9,10 +9,10 @@ public class Main {
 
         //pravim si BOSS, sklad, case, admins, customer, supplier
 
-        Boss boss = new Boss("Ivan Ivanov", PersonalType.BOSS, "BG", "info");
+        Boss boss = new Boss("Ivan Ivanov", PersonalType.BOSS, "BG", "address: Sofia, EGN: 0000000000");
         Administrator admin = new Administrator("Stefcho", 2500, PersonalType.ADMINISTRATOR, "BG", "info");
-        Customer customer = new Customer("Pencho Tenev", 600, PersonalType.CUSTOMER, "BG", "adress", CustomerType.LONGTIME);
-        Customer customer2 = new Customer("Harry Kane", 6000, PersonalType.CUSTOMER, "BG", "adress", CustomerType.PARTTIME);
+        Customer customer = new Customer("Pencho Tenev", 600, PersonalType.CUSTOMER, "BG", "address Sofia, EGN: 0000000000", CustomerType.LONGTIME);
+        Customer customer2 = new Customer("PUB 'Drunken Sailor'", 6000, PersonalType.CUSTOMER, "BG", "address Pernik, EIK: 0000000000", CustomerType.PARTTIME);
         Supplier supplier = new Supplier(PersonalType.SUPPLIER);
 
         Warehouse warehouse = new Warehouse("TheHulk");
@@ -55,8 +55,8 @@ public class Main {
 //        System.out.println(customer.getBudget());
 //        System.out.println(customer2.getBudget());
 //        warehouseCase.checkBalance();
-//        warehouse.showOrders();
-//        warehouse.showCatalog();
+     warehouse.showOrders();
+       warehouse.showCatalog();
 
 
     }

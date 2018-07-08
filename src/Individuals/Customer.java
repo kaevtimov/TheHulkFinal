@@ -7,6 +7,7 @@ import Orders.Orderable;
 import Orders.PayType;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -14,13 +15,13 @@ public class Customer extends Individual implements Orderable, Searchable, Payab
 
     private CustomerType customerType;
     private double budget;
-    private ArrayList<Order> customerOrders;   // da go napravq na customerRequests
+    private ArrayList<Order> customerOrders;
 
-    private static int counterOrderNumberCustomer = 1;           // nomera na porednata poruchka
-    private static final double DISCOUNT_10 = 0.1;     // otstupka za nad 10 quantity
-    private static final double DISCOUNT_25 = 0.25;     // otstupka za nad 25 quantity
-    private static final double DELIVERY_PRICE_10 = 0.05;       // cena za dostavka pri nad 10 quantity
-    private static final double DELIVERY_PRICE_25 = 0.1;      // cena za dostavka pri nad 25 quantity
+    private static int counterOrderNumberCustomer = 1;           //every customer's requests start from 1
+    private static final double DISCOUNT_10 = 0.1;     //discount up to 10 quality
+    private static final double DISCOUNT_25 = 0.25;     // discount up to 25 quality
+    private static final double DELIVERY_PRICE_10 = 0.05;       // price up to 10 quality
+    private static final double DELIVERY_PRICE_25 = 0.1;      // price up to 10 quality
 
 
     public Customer(String name, double budget, PersonalType personalType, String nationality, String personalInfo, CustomerType customerType) {
@@ -58,47 +59,48 @@ public class Customer extends Individual implements Orderable, Searchable, Payab
 
     @Override
     public void searchProduct(String productName, int quantity, GoodType goodType) {
-        System.out.printf("-The customer is looking for %d of %s- \"%s\".\n", quantity, goodType, productName);
+        System.out.println();
+        System.out.printf("Customer is searching for %s [%s], quantity: %d.\n", productName, goodType, quantity);
     }
 
     @Override
     public void order(GoodType goodType, int quantity, double orderValue, String productName) {
-        if(quantity > 10){                                         // cenata na poruchkata ako kolichestvoto e nad 10
+        if(quantity > 10){                                         // count the price for up to 10 products
             orderValue = orderValue - (DISCOUNT_10*orderValue);
             orderValue = orderValue + (DELIVERY_PRICE_10*orderValue);
-        }else if(quantity > 25){                                   // cenata na poruchkata ako kolichestvoto e nad 25
+        }else if(quantity > 25){                                   // count the price for up to 25 products
             orderValue -= DISCOUNT_25*orderValue;
             orderValue += DELIVERY_PRICE_25*orderValue;
         }
         Order order = new Order(goodType,productName, orderValue, counterOrderNumberCustomer, quantity, PersonalType.CUSTOMER);
         customerOrders.add(order);
-        System.out.printf("- Request add to customer order. Product: %s - \"%s\", quantity: %d. Order type: %s.\n",
-                goodType, productName, quantity, order.getOrderActivity());
+        System.out.printf("Request is added to customer orders. Product: %s - [%s], quantity: %d. Order type: %s.\n",
+                productName, goodType, quantity, order.getOrderActivity());
         counterOrderNumberCustomer++;
     }
 
 
-    public void checkRequests(){                     // vuzmojnost za klienta da si proveri info za vsichkite poruchki
+    public void checkRequests(){                     // customer could check his orders
         if(!customerOrders.isEmpty()){
             for (Order order:customerOrders) {
                 order.showOrder();
             }
         }else{
-            System.out.println("No active requests..");
+            System.out.println("No active requests.");
         }
     }
 
-    private void checkDigit(int digit)throws MyCustomException {   // dobaveno
+    private void checkDigit(int digit)throws MyCustomException {   // check exeption for valid integer choice
         if(digit < 0){
-            throw new MyCustomException("You must enter a valid Integer!!!");   // za chislata pri cancel
+            throw new MyCustomException();   // za chislata pri cancel
         }
     }
+    //"You must enter a valid number from list below"
 
-    public void cancelRequest(){    // da moje da otkazva poruchki po tehniq poreden nomer samo predi da e signed contracta
+    public void cancelRequest(){    // customer could cancel orders before signing contract
         Scanner scanner = new Scanner(System.in);
-        //System.out.println("Customer wants to remove a request from list of requests...");
         if(!getCustomerOrders().isEmpty()){         // dobaveno (samo ako ima zaqvki)
-            System.out.println("Which request you want to remove from order list?");
+            System.out.println("Which request you want to remove from orders list?");
             int requestNumber = 0;
             try{
                 requestNumber = scanner.nextInt();
@@ -106,11 +108,14 @@ public class Customer extends Individual implements Orderable, Searchable, Payab
             }catch (MyCustomException mce){
                 System.out.println("Enter a positive number!");
                 //scanner.nextLine();
+            }catch (InputMismatchException ime){
+                System.out.println("Enter a number!");
+                //scanner.nextLine();
             }
             boolean hasNumber = false;
             for (Order order:customerOrders) {
                 if(order.getNumber()==requestNumber){
-                    order.setOrderActivity(OrderActivity.CANCELLED);      // setvame aktivnostta na poruchkata da e cancelled
+                    order.setOrderActivity(OrderActivity.CANCELLED);      // set the order activity to be cancelled
                     counterOrderNumberCustomer--;
                     hasNumber = true;
                 }
@@ -124,14 +129,14 @@ public class Customer extends Individual implements Orderable, Searchable, Payab
         }
     }
 
-    @Override
+    @Override // custormer wants to pay his orders
     public void pay(PayType payType, double amount, PersonalType personalType) {
-        System.out.printf("-[%s]Thank you for the fast process! You are amazing! Definitely I am going to come again!\n" +
-                "Now I want to pay the bill [%.2f] by %s.\n", personalType, amount, payType);
+        System.out.printf("-[%s] Thank you for the good service!\n" +
+                "I want to pay the bill [%.2f] by %s.\n", personalType, amount, payType);
 
     }
 
-    @Override
+    @Override //show the customer individual personal information
     public String toString(){
         return String.format("[%s] Name: %s, budget: %.2f, info: %s, nationality: %s.",
                 getPersonalType(), getName(), getBudget(), getPersonalInfo(), getNationality());

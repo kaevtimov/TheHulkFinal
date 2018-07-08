@@ -19,7 +19,7 @@ public class Warehouse {
     private ArrayList<Food> foodsInventory;
     private ArrayList<Domestic> domesticProductsInventory;
     private ArrayList<Order> warehouseOrders;
-    private ArrayList<Good> toBeReload;               // tova e AL za kakvo da se porucha ot suppliera
+    private ArrayList<Good> toBeReload;               // list to be reloaded from the suppliers
 
 
     public Warehouse(String name){
@@ -38,10 +38,8 @@ public class Warehouse {
     }
 
 
-
-
-    // RP prenapisan e, za da se pokazvat vsi4ki poleta na produktite
-    public void showCatalog(){              // pokazva ni katalog ot nalichnite produkti v sklada
+    // method to show actual goods, quantity and info
+    public void showCatalog(){
         System.out.println("-----------------------------");
         System.out.println("WAREHOUSE PRODUCT CATALOGUE: ");
         System.out.println("-------------------------------------------------------------------------------------");
@@ -61,19 +59,20 @@ public class Warehouse {
         System.out.println("-------------------------------------------------------------------------------------");
     }
 
-    public void toBeReload(){                 // proverka na spisuka s produkti za zarejdane
+    public void toBeReload(){                 // checl the list for reloading from supplier
         for (Good good:toBeReload) {
-            System.out.printf("Product: %s - %s with quantity: %d, must be reloaded.\n", good.getName(), good.getGoodType(), good.getTotalQuantity());
+            System.out.printf("Product to reload: %s - %s, quantity: %d.\n", good.getName(), good.getGoodType(), good.getTotalQuantity());
         }
     }
 
-    public void showOrders(){                   // pokazva ni poruchkite v sklada i tqhnata aktivnost
+    public void showOrders(){                   // shows all warehouse orders from customers and to suppliers
         for (Order order:warehouseOrders) {
             order.showOrder();
+
         }
     }
 
-    // addvame produktite puvo v cataloga s quantity 0, i posle gi zarejdame ot proizvoditelite
+    // add products in the warehouse and put it to be reloading for the first time by boss
     void addAlcohol(String name, double priceWarehouse, int totalQuantity, GoodType goodType,
                     double alcoholContaining, AlcoholType alcoholType , PackageType packageType){
         Alcohol alcohol = new Alcohol(name, priceWarehouse, totalQuantity, goodType, alcoholContaining, alcoholType, packageType);
@@ -81,6 +80,7 @@ public class Warehouse {
         alcoholInventory.add(alcohol);
     }
 
+    // add products in the warehouse and put it to be reloading for the first time by boss
     void addSoftDrink(String name, double priceWarehouse, int totalQuantity, GoodType goodType, SoftDrinkType softDrinkType,
                       PackageType packageType){
         SoftDrink softDrink = new SoftDrink(name, priceWarehouse, totalQuantity, goodType, softDrinkType, packageType);
@@ -88,13 +88,14 @@ public class Warehouse {
         softDrinkInventory.add(softDrink);
     }
 
-
+    // add products in the warehouse and put it to be reloading for the first time by boss
     void addFood(String name, double priceWarehouse, int totalQuantity, GoodType goodType, FoodType foodType, PackageType packageType){
         Food food = new Food(name, priceWarehouse, totalQuantity, goodType, foodType, packageType);
         inventory.add(food);
         foodsInventory.add(food);
     }
 
+    // add products in the warehouse and put it to be reloading for the first time by boss
     void addDomesticProducts(String name, double priceWarehouse, int totalQuantity, GoodType goodType, DomesticType domesticType){
         Domestic domesticP = new Domestic(name, priceWarehouse, totalQuantity, goodType, domesticType);
         inventory.add(domesticP);
@@ -102,20 +103,18 @@ public class Warehouse {
     }
 
 
-    private void checkDigit(int digit)throws MyCustomException {
+    private void checkDigit(int digit)throws MyCustomException { // check exeption for the customer input number
         if(digit <= 0){
-            throw new MyCustomException("You must enter a integer bigger than 0!!!");   // za chislata s enumeraciite
+            throw new MyCustomException();
         }
     }
 
 
-    public void searchInWarehouse(Customer customer, Administrator admin, Case casse) throws MyCustomException {     //throws MyCustomException
-        // dobavil sum custom exception ako se vuvedut otricatelni chisla
+    public void searchInWarehouse(Customer customer, Administrator admin, Case casse) throws MyCustomException {
+        //throws MyCustomException for not possitiv number in input
         System.out.printf("Hello, %s!\n", customer.getName());
         while (true) {
-
             GoodType goodType = GoodType.valueOf(choosingGoodType());
-
             String productName = "";
             switch (goodType) {
                 case ALCOHOL:
@@ -131,46 +130,47 @@ public class Warehouse {
                     productName = choiceOfSoftDrinkInventory();
                     break;
                 case OTHER:
-                    System.out.println("We do not offer other products.");
                     productName = "OTHER";
+                    System.out.printf("No goods in part %s.", productName);
+                    System.out.println();
                     break;
                 default:
                     break;
             }
 
             if (productName.equals("OTHER") || productName.equals("")) {
-                System.out.println("The product doesn't appear in our catalog. Try again!");
+                System.out.println("We will load soon. Welcome back again!");
                 continue;
             }
 
             scanner.nextLine();
             int quantity = 0;
             boolean inputCorrectQuantity = false;
-            while(!inputCorrectQuantity) {               // dokato ne vuvede INTEGER go karame da pishe
+            while(!inputCorrectQuantity) {               // works until customer inputs valid number
                 try{                          //MyCustomException
-                    System.out.println("Now please enter the desired quantity:");
+                    System.out.println("Now please enter the needed quantity:");
                     quantity = scanner.nextInt();
                     checkDigit(quantity);
                     break;
                 }
                 catch(InputMismatchException ime){
-                    System.out.println("You must enter a integer!");
+                    System.out.println("You must enter a valid number!");
                     scanner.nextLine();
                 }
-                catch (MyCustomException mce) {             // dobaven custom exception za quantity, ako se vuvede otricatelno chislo
-                    System.out.println("You must enter a integer bigger than 0!!!");
+                catch (MyCustomException mce) {             // custom exception for input not possitiv quantity
+                    System.out.println("You must enter a number bigger than 0!");
                     scanner.nextLine();
                 }
             }
             scanner.nextLine();
-            customer.searchProduct(productName, quantity, goodType);  //customera kazva turseniq produkt
-            // proverka dali go imame nalichno
+            customer.searchProduct(productName, quantity, goodType);  //customera input the searching good
+            // check if good is available in the warehouse
             boolean contains = false;
             for (Good good:inventory) {
                 if(good.getTotalQuantity()>=quantity && good.getName().equalsIgnoreCase(productName) && good.getGoodType()==goodType){
                     contains = true;
-                    System.out.printf("- You are a lucky guy! Yes, we have \"%s\" %s available.\n",productName, goodType);
-                    System.out.println("Do you want to put it as a request? (Yes/No)");
+                    System.out.printf("We have \"%s\" %s available.\n",productName, goodType);
+                    System.out.println("Do you want to put this product as a request? (Yes/No)");
                     String answer = scanner.nextLine();
                     if(answer.equalsIgnoreCase("yes")){
                         constructCustomerRequest(customer, productName, goodType, quantity);
@@ -179,39 +179,39 @@ public class Warehouse {
                 }else if(good.getName().equalsIgnoreCase(productName) && good.getGoodType()==goodType && quantity > good.getTotalQuantity()){  //promeneno
                     contains = true;
                     System.out.printf("Sorry, available quantity %s of %s (%s).\n" +
-                                    "Do you want to order less quantity which is under %d, and then put it as a request? (Yes/No)\n"
+                                    "Do you want to order less quantity, which is under %d, and then put it as a request? (Yes/No)\n"
                             ,good.getTotalQuantity(), productName, goodType, good.getTotalQuantity());
                     String answer = scanner.nextLine();
                     if(answer.equalsIgnoreCase("yes")){
                         System.out.printf("Please enter new quantity under %d.\n",good.getTotalQuantity());
-                        // i tuk trqbva da se hvane otricatelen exception
+
                         int newQuantity = 0;
                         boolean inputNewQuantity = false;
-                        while(!inputCorrectQuantity) {               // dokato ne vuvede INTEGER go karame da pishe   :D
+                        while(!inputCorrectQuantity) {               // works until customer inputs valid number
                             try{                          //MyCustomException
-                                System.out.println("Now please enter the desired quantity:");
+                                System.out.println("Now please enter the needed quantity:");
                                 newQuantity = scanner.nextInt();
 
                                 checkDigit(newQuantity);
                                 break;
                             }
                             catch(InputMismatchException ime){
-                                System.out.println("You must enter a integer!");
+                                System.out.println("You must enter a number!");
                                 scanner.nextLine();
                             }
-                            catch (MyCustomException mce) {             // dobaven custom exception za quantity, ako se vuvede otricatelno chislo
+                            catch (MyCustomException mce) {              // catch exeption for not positive input number
                                 System.out.println("You must enter a integer bigger than 0!!!");
                                 scanner.nextLine();
                             }
                         }
-                        System.out.printf("Customer updated desired quantity: %d.\n", newQuantity);
+                        System.out.printf("Customer updated needed quantity: %d.\n", newQuantity);
                         constructCustomerRequest(customer, productName, goodType, newQuantity);
                         scanner.nextLine();
                         break;
-                    }                                                                                                                 // do tuk promeneno
+                    }
                 }
-            }if(contains==false){ System.out.println("The product doesn't appear in our catalog!");}// tova izpisva ako jelaniq produkt go nqmame v kataloga
-            System.out.println("Would you like to continue? Y/N");
+            }if(contains==false){ System.out.println("The product is not available in our catalog!");}// output when there's no such product in the catalogue
+            System.out.println("Would you like to continue? (Yes/No)");
             String answerCustomer = scanner.nextLine();
             if (answerCustomer.equalsIgnoreCase("y")
                     || answerCustomer.equalsIgnoreCase("yes")) {
@@ -222,9 +222,9 @@ public class Warehouse {
         }
 
 
-        int numberOfCustomerRequests = customer.getCustomerOrders().size();  //kolko requesti ima
+        int numberOfCustomerRequests = customer.getCustomerOrders().size();  //couter for all customer requests
         do {
-            System.out.println("Do you want to check your requests? Y/N");
+            System.out.println("Do you want to check your requests? (Yes/No)");
             String answerCustomer = scanner.nextLine();
             if (answerCustomer.equalsIgnoreCase("y")
                     || answerCustomer.equalsIgnoreCase("yes")) {
@@ -235,7 +235,7 @@ public class Warehouse {
 
             if(!customer.getCustomerOrders().isEmpty()){
                 if(numberOfCustomerRequests > 0){
-                    System.out.println("Do you want to cancel any request Yes/No?");        // dobaveno  samo ako ima nqkakvi zaqvki
+                    System.out.println("Do you want to cancel any request? (Yes/No)");    //appiars only when have request
                     String answerCancel = scanner.nextLine();
                     if(answerCancel.equalsIgnoreCase("yes") || answerCancel.equalsIgnoreCase("y")){
                         customer.cancelRequest();
@@ -250,20 +250,20 @@ public class Warehouse {
         } while (true);
 
 
-        if(!customer.getCustomerOrders().isEmpty() && numberOfCustomerRequests != 0){  //dobaveno ako ima requesti i ako ima samo ako sa ACTIVE
+        if(!customer.getCustomerOrders().isEmpty() && numberOfCustomerRequests != 0){  //when have ACTIVE requests
             boolean canSign = false;
-            for (Order order:customer.getCustomerOrders()) {                // dobaveno inache shte podpishe dogovor za 0 produkti!
+            for (Order order:customer.getCustomerOrders()) {                // check not to sign contract, if all requests are canceled
                 if(order.getOrderActivity()==OrderActivity.ACTIVE){
                     canSign = true;
                 }
             }
             if(canSign==true){
-                System.out.println("Do you want to sign contract now Yes/No?");
+                System.out.println("Do you want to sign contract now? (Yes/No)");
                 String answerSign = scanner.nextLine();
                 if(answerSign.equalsIgnoreCase("yes")){
                     finalizeOrder(customer,admin,casse);
                 }else{
-                    System.out.println("Customer refuses to sign.. and he walks away...");
+                    System.out.println("Customer refused to sign and left.");
                 }
             }else{
                 System.out.println("You have no requests to sign a contract. Have a nice day!");
@@ -278,21 +278,21 @@ public class Warehouse {
         String choice = "";
         boolean isCorrectNumber = false;
         int i = 1;
-        System.out.println("Which is the good type of your desired product?");
+        System.out.println("Which is the good type of your needed product?");
         for (GoodType type :
                 GoodType.values()) {
             System.out.println(i + " - " + type);
             i++;
         }
 
-        System.out.println("The system expects your choice");
-        //метод за прихващане на изключения ако въведеният избор не e число
+        System.out.println("The system expects your choice..");
+        //chatch MyCustomException when input is not number
         int n = 0;
         while (!isCorrectNumber) {
-            try{                          //MyCustomException
+            try{
                 n = scanner.nextInt();
-                if(n == 0 || n > 5){                                 // ako vuvede chislo ne ot 1-4
-                    System.out.println("Enter a number from 1-5!!");
+                if(n == 0 || n > 5){                                 //when input number is not between 1-5
+                    System.out.println("Enter a number from 1-5!");
                 }
                 checkDigit(n);
                 // избор на тип стока
@@ -320,17 +320,17 @@ public class Warehouse {
                 }
             }
             catch(InputMismatchException ime){
-                System.out.println("You must enter a integer!");
+                System.out.println("You must enter a number!");
                 scanner.nextLine();
-            } catch (MyCustomException mce) {             // dobaven custom exception za quantity, ako se vuvede otricatelno chislo
-                System.out.println("You must enter a positive Integer!!!");
+            } catch (MyCustomException mce) {             // custom exception for not positive quantity
+                System.out.println("You must enter a positive number!");
                 scanner.nextLine();
             }
         }
         return choice;
     }
 
-    public String choiceOfAlcoholInventory() { // показва марките алкохол и избор на марка
+    public String choiceOfAlcoholInventory() { // shows users choice for good trademarks
         System.out.println();
         System.out.println("Please enter product name:");
         String choice = "";
@@ -341,10 +341,10 @@ public class Warehouse {
             i++;
         }
 
-        System.out.println("The system expects your choice");
+        System.out.println("The system expects your choice..");
         int n = 0;
 
-        do { //проверка числото да е в обхвата на колекцията Алкохол
+        do { //exception for not in the good collection
             try{
                 n = scanner.nextInt();
                 checkDigit(n);
@@ -355,10 +355,10 @@ public class Warehouse {
                     System.out.printf("Enter a number from 1- %d!!", i-1);
                 }
             }catch(InputMismatchException ime){
-                System.out.println("You must enter a integer!");
+                System.out.println("You must enter a number!");
                 scanner.nextLine();
-            } catch (MyCustomException mce) {             // dobaven ako se vuvede otricatelno chislo
-                System.out.println("You must enter a positive Integer!!!");
+            } catch (MyCustomException mce) {             // checks for not positive number
+                System.out.println("You must enter a positive number!!!");
                 scanner.nextLine();
             }
         } while (true);
@@ -377,7 +377,7 @@ public class Warehouse {
 
 
 
-    public String choiceOfFoodInventory() { // показва марките храни и избор на марка
+    public String choiceOfFoodInventory() { // shows users choice for good trademarks
         System.out.println();
         System.out.println("Please enter product name:");
         String choice = "";
@@ -388,10 +388,10 @@ public class Warehouse {
             i++;
         }
 
-        System.out.println("The system expects your choice");
-        int n = 0; //метод за прихващане на изключения ако въведеният избор не e число
+        System.out.println("The system expects your choice..");
+        int n = 0; // exeption if the input choice is not a number
 
-        do { //проверка числото да е в обхвата на колекцията за храни
+        do { //exception for not in the good collection
             try{
                 n = scanner.nextInt();
                 checkDigit(n);
@@ -402,10 +402,10 @@ public class Warehouse {
                     System.out.printf("Enter a number from 1- %d!!", i-1);
                 }
             }catch(InputMismatchException ime){
-                System.out.println("You must enter a integer!");
+                System.out.println("You must enter a number!");
                 scanner.nextLine();
-            } catch (MyCustomException mce) {             // dobaven ako se vuvede otricatelno chislo
-                System.out.println("You must enter a positive Integer!!!");
+            } catch (MyCustomException mce) {             // checks for not positive number
+                System.out.println("You must enter a positive number!");
                 scanner.nextLine();
             }
         } while (true);
@@ -422,7 +422,7 @@ public class Warehouse {
         return choice;
     }
 
-    public String choiceOfSoftDrinkInventory() { // показва марките безалкохолни и избор на марка
+    public String choiceOfSoftDrinkInventory() { // shows the choice for softdrinks marks
         System.out.println();
         System.out.println("Please enter product name:");
         String choice = "";
@@ -433,10 +433,10 @@ public class Warehouse {
             i++;
         }
 
-        System.out.println("The system expects your choice");
-        int n = 0; //метод за прихващане на изключения ако въведеният избор не e число
+        System.out.println("The system expects your choice..");
+        int n = 0; // exception catch if the input is not a number
 
-        do { //проверка числото да е в обхвата на колекцията
+        do { //check if the input is in the range of collection
             try{
                 n = scanner.nextInt();
                 checkDigit(n);
@@ -447,10 +447,10 @@ public class Warehouse {
                     System.out.printf("Enter a number from 1- %d!!", i-1);
                 }
             }catch(InputMismatchException ime){
-                System.out.println("You must enter a integer!");
+                System.out.println("You must enter a number!");
                 scanner.nextLine();
-            } catch (MyCustomException mce) {             // dobaven ako se vuvede otricatelno chislo
-                System.out.println("You must enter a positive Integer!!!");
+            } catch (MyCustomException mce) {             // if input is not positive number
+                System.out.println("You must enter a positive number!");
                 scanner.nextLine();
             }
         } while (true);
@@ -467,7 +467,7 @@ public class Warehouse {
         return choice;
     }
 
-    public String choiceOfDomesticInventory() { // показва марките избор на марка
+    public String choiceOfDomesticInventory() { // // shows the choice for domestics marks
         System.out.println();
         System.out.println("Please enter product name:");
         String choice = "";
@@ -478,10 +478,10 @@ public class Warehouse {
             i++;
         }
 
-        System.out.println("The system expects your choice");
-        int n = 0; //метод за прихващане на изключения ако въведеният избор не e число
+        System.out.println("The system expects your choice..");
+        int n = 0; // catch if the input is not a number
 
-        do { //проверка числото да е в обхвата на колекцията
+        do { //check if the number is not in the range of the collection
             try{
                 n = scanner.nextInt();
                 checkDigit(n);
@@ -492,10 +492,10 @@ public class Warehouse {
                     System.out.printf("Enter a number from 1- %d!!", i-1);
                 }
             }catch(InputMismatchException ime){
-                System.out.println("You must enter a integer!");
+                System.out.println("You must enter a number!");
                 scanner.nextLine();
-            } catch (MyCustomException mce) {             // dobaven ako se vuvede otricatelno chislo
-                System.out.println("You must enter a positive Integer!!!");
+            } catch (MyCustomException mce) {             // if the number is not possitive
+                System.out.println("You must enter a positive number!");
                 scanner.nextLine();
             }
         } while (true);
@@ -515,8 +515,8 @@ public class Warehouse {
 
 
 
-
-    public void constructCustomerRequest(Customer customer, String productName, GoodType goodType, int quantity){ // sled kato razbira che e nalichen, podgotvqt zaqvkata
+    // prepare the requested order when it's made.
+    public void constructCustomerRequest(Customer customer, String productName, GoodType goodType, int quantity){
         double orderValue = 0;
         for (Good good:inventory) {
             if(good.getName().equalsIgnoreCase(productName) && good.getTotalQuantity() >= quantity) {
@@ -532,24 +532,23 @@ public class Warehouse {
 
     public void finalizeOrder(Customer customer, Administrator admin, Case aCase)  {
         System.out.printf("- %s wants to proceed and sign a Order contract for the requests!\n", customer.getName());
-        // tuk dobavqme poruchkite na edin klient v obshtite poruchki na sklada
-        double contractAmount = 0;       //tova e cenata na celiq dogovor koqto trqbva da opredelim
-        for (int i = 0; i < customer.getCustomerOrders().size(); i++) {   // slujat za namalqvane na stokata v sklada sled poruchkata
+        // put the customer order in the warehouse orders
+        double contractAmount = 0;       //the start value of the contract is 0
+        for (int i = 0; i < customer.getCustomerOrders().size(); i++) {   // -- good quantity in the warehouse after the customer order
             for (Good good : inventory) {
                 if (customer.getCustomerOrders().get(i).getOrderActivity() == OrderActivity.ACTIVE
                         && customer.getCustomerOrders().get(i).getProductName().equalsIgnoreCase(good.getName())) {
-                    contractAmount += customer.getCustomerOrders().get(i).getTotalAmount();   // presmqtame cenata na vsichki poruchki po dogovora
+                    contractAmount += customer.getCustomerOrders().get(i).getTotalAmount();   // counts the sum of all orders of the customer
                     customer.getCustomerOrders().get(i).setOrderActivity(OrderActivity.FINISHED);
                     good.setTotalQuantity(good.getTotalQuantity() -
-                            customer.getCustomerOrders().get(i).getQuantity());    // namalqvame obshtoto kolichestvo v sklada na poruchaniq produkt
-                    warehouseOrders.add(customer.getCustomerOrders().get(i));        // dobavqme poruchkite v tezi na sklada samo ako ne sa cancelled
+                            customer.getCustomerOrders().get(i).getQuantity());    // -- quantity of the ordered product
+                    warehouseOrders.add(customer.getCustomerOrders().get(i));        // put the customer order in all warehouse orders, if not canceled
                 }
             }
-        }// proverka dali budgeta na klienta e dostatuchen da plati poruchkata
-        if(customer.getBudget() >= contractAmount){
-            // ako budgeta e dostatuchen
-            System.out.printf("- The order is processed! Order made from [%s] customer: %s, %s.\n" +
-                            "- Now the contract is signed, the invoice was made and you must pay, total amount (%.2f) lv, please.\n", customer.getCustomerType(),
+        }// check the budjet of the customer before the order
+        if(customer.getBudget() >= contractAmount){ //budjet is enough
+            System.out.printf("Order made from [%s] customer: %s, %s is in process!\n" +
+                            "The contract is signed, the invoice was made.\n" + "Total amount (%.2f) lv. Warehouse is waiting for paying.\n", customer.getCustomerType(),
                     customer.getName(), customer.getPersonalType(), contractAmount);
             System.out.println("How do you prefer to pay?");
             int i = 1;
@@ -558,17 +557,17 @@ public class Warehouse {
                 System.out.println(i + " - " + type);
                 i++;
             }
-            System.out.println("The system expects your choice");
+            System.out.println("The system expects your choice..");
             int choiceOfPayType = 0;
             PayType payType = null;
             boolean inputCorrect = false;
-            while(!inputCorrect){               // dokato ne vuvede INTEGER go karame da pishe
-                try{            // mycustomexception
+            while(!inputCorrect){               // continue until the input is INTEGER
+                try{            // my custom exception
                     choiceOfPayType = scanner.nextInt();
                     if(choiceOfPayType > 3 || choiceOfPayType==0){
                         System.out.println("Enter a correct number!");
                     }
-                    checkDigit(choiceOfPayType);   // dobaveno
+                    checkDigit(choiceOfPayType);
                     switch (choiceOfPayType) {
                         case 1: payType = PayType.CREDIT;
                             inputCorrect=true;
@@ -583,7 +582,7 @@ public class Warehouse {
                             break;
                     }
                 }catch(InputMismatchException ime){
-                    System.out.println("You must enter a integer!");
+                    System.out.println("You must enter a number!");
                     scanner.nextLine();
                 }
                 catch(MyCustomException mce){
@@ -592,31 +591,31 @@ public class Warehouse {
                 }
             }
             customer.pay(payType, contractAmount, customer.getPersonalType());
-            customer.setBudget(customer.getBudget() - contractAmount);       // namalqvame budgeta na customera
-            admin.sell(aCase, contractAmount);  //administratora prodava i uvelichava income na sklada
-        }else{   // ako budgeta ne dostiga
-            System.out.printf("- The order is processed! Sorry , but you don't have enough budget to finish the order! Deficit [%.2f]\n",
+            customer.setBudget(customer.getBudget() - contractAmount);       // set down the customer budget
+            admin.sell(aCase, contractAmount);  //administratora sells and ++ warehouse income
+        }else{   // budjet is not enough
+            System.out.printf("- The order is processed! Sorry, but You don't have enough budget to finish the order! Deficit [%.2f]\n",
                     contractAmount - customer.getBudget());
         }
-        customer.getCustomerOrders().clear();  // izchistvame spisuka s requesti na customera zashtoto veche e finalizirano vsichko
+        customer.getCustomerOrders().clear();  // clears the request list of the customer when the process is finished.
         customer.setCounterOrderNumberCustomer(1);
     }
 
 
-    //promeneno kato sum vkaral metod contact tuk
-    public void checkProductsQuantity(Administrator admin, Supplier supplier, Case casse){     // tuk proverqvame stokite za nalichnost i ni kazva koe trqbva
+
+    public void checkProductsQuantity(Administrator admin, Supplier supplier, Case casse){     //check goods for available quantity and find for reloading
         boolean isFull = true;
-        for (Good good:inventory) {     // ako trqbva da se zaredi
-            if(good.getTotalQuantity() < 50){  // ako e pod 50 i toBeReload ne sudurja veche sushtiq produkt za zarejdane
+        for (Good good:inventory) {     // if it could be reloaded
+            if(good.getTotalQuantity() < 50){  // when it's under 50, add in toBeReloaded list
                 if(!toBeReload.contains(good)){
                     isFull=false;
                     toBeReload.add(good);
-                    System.out.printf("Product: %s - %s with quantity: %d, must be reloaded.\n", good.getName(), good.getGoodType(), good.getTotalQuantity());
+                    System.out.printf("Product to reload: %s [%s], quantity: %d.\n", good.getName(), good.getGoodType(), good.getTotalQuantity());
                 }
             }
         }
-        if(isFull){   // ako vsichko e pulno
-            System.out.println("Every product has the normal amount of quantity!");
+        if(isFull){   // if no need to reload
+            System.out.println("All products have the normal amount of quantity!");
         }else{
             System.out.println("Do you want to proceed to reloading? (Yes/No)");
             String answer = scanner.nextLine();
@@ -630,25 +629,25 @@ public class Warehouse {
 
     public void contactProducers(Administrator admin, Supplier supplier, Case casse) {
         double total = 0;
-        System.out.printf("Admin %s processing contact with producers...\n", admin.getName());
+        System.out.printf("Admin %s processing contact with producers..\n", admin.getName());
         for (Good good : toBeReload) {
-            admin.searchProduct(good.getName(), 100, good.getGoodType());  //vinagi zarejdame produkta sus 100
+            admin.searchProduct(good.getName(), 100, good.getGoodType());  //fix the reloading quantity 100
             double orderValue = good.getPriceProducer() * 100;
-            total+=orderValue;  // tuk presmqtame totala na zarejdaneto
-            admin.order(good.getGoodType(), 100, orderValue, good.getName()); // admina poruchva po edinichno zashtoto vseki supplier e razlichen
-            admin.pay(PayType.CREDIT, orderValue, admin.getPersonalType());                  // administratora plashta poruchkata
-            supplier.sell(casse, orderValue);                          // supliera prodava, i ednivremenno s tova se uvelichava outcome na sklada
-            // trqbva da uvelichim kolichestvoto da poruchanite produkti v sklada
-            if(inventory.contains(good)){                         // tuk uvelichavame kolichestvoto na produkta v sklada
+            total+=orderValue;  // counts the total sum of the reloading
+            admin.order(good.getGoodType(), 100, orderValue, good.getName()); // administrator orders one by one, because of different suppliars
+            admin.pay(PayType.CREDIT, orderValue, admin.getPersonalType());                  // administrator pays the order
+            supplier.sell(casse, orderValue);                          // suplier sells to warehouse and ++ outcome in the case
+
+            if(inventory.contains(good)){                         // upload the quantity of the products in the warehouse
                 good.setTotalQuantity(good.getTotalQuantity()+100);
             }
         }
-        toBeReload.clear(); // clearvame zashtoto sme gi zaredili veche
-        for (Order order : admin.getAdminOrders()) {               // tuk dobavqme dnevnite zarejdaniq na admina kum obshtite na sklada
+        toBeReload.clear(); //clear the product from the list after reloading
+        for (Order order : admin.getAdminOrders()) {               // add the administrator orders to suppliers in the list of warehouse orders
             order.setOrderActivity(OrderActivity.FINISHED);
             warehouseOrders.add(order);
         }
-        System.out.printf("Total amount of reloading: [%.2f]\n", total);
+        System.out.printf("Total sum of reloading: [%.2f]\n", total);
     }
 }
 

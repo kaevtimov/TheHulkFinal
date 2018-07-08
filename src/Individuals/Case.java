@@ -27,7 +27,10 @@ public class Case {
         this.outcome = outcome;
     }
 
-    public void checkBalance(){      // proverqvame kak e balansa na sklada
+
+    // check case balance and warn
+    public void checkBalance(){
+        System.out.println();
         if(outcome > income){
             // ako sme vuv falit
             System.out.printf("[DANGER!] Warehouse BALANCE:[%.2f]! \n"
@@ -39,12 +42,7 @@ public class Case {
             // ako sme dobre
             System.out.printf("Warehouse BALANCE:[%.2f]. We are on a right way!\n", income-outcome);
         }
+        System.out.println();
     }
 
-    public static class MyCustomException extends Exception{
-
-        public MyCustomException(String message){
-            super(message);
-        }
-    }
 }

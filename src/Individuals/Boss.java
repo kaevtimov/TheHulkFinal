@@ -9,13 +9,15 @@ public class Boss extends Individual{
         super(name, personalType, nationality, personalInfo);
     }
 
-    //RP boss otvaria sklada i setva kasa
+    // welcome when set the warehouse with income in the case
     public void investWarehouseAndCase() {
         System.out.printf("New warehouse 'THE HULK' is open now by %s", getName());
         System.out.println();
         System.out.println("Warehouse case is set - income 2500000, outcome 0.");
+        System.out.println();
     }
 
+    // show the boss individual personal information
     @Override
     public String toString(){
         return String.format("[%s] Name: %s, info: %s, nationality: %s.",
@@ -24,8 +26,8 @@ public class Boss extends Individual{
 
 
 
-    // RP prenapisani sa vsichki produkti
-    //pravim kataloga i addvame v sklada tochno opredeleni produkti
+
+    // boss fills the different products in the warehouse in the begging; only the boss could add type of products
     public void setUpCatalog(Warehouse warehouse){                        // s nulevo kolichestvo
         warehouse.addAlcohol("Scotch RedLabel", 19.99, 0, GoodType.ALCOHOL, 40, AlcoholType.WHISKEY, PackageType.BOTTLED);
         warehouse.addAlcohol("vodka Smirnoff", 12.99, 0, GoodType.ALCOHOL, 40, AlcoholType.VODKA, PackageType.BOTTLED);

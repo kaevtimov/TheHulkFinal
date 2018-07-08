@@ -10,9 +10,9 @@ public class Supplier extends Individual implements Sellable {
     }
 
 
-    @Override
+    @Override // when supplier add needed product ++ the warehouse costs
     public void sell(Case casse, double contractAmount) {
         System.out.printf("Supplier delivered the order! Total amount: %.2f.\n", contractAmount);
-        casse.setOutcome(casse.getOutcome()+contractAmount);  // uvelichavame razhodite na sklada
+        casse.setOutcome(casse.getOutcome()+contractAmount);
     }
 }
