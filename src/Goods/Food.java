@@ -4,7 +4,7 @@ public class Food extends Good{
 
     private FoodType foodType;
 
-    private PackageType packageType;            // RP dobaveno v Alcohol, SoftDrinks i Food
+    private PackageType packageType;      
 
     public Food(String name, double priceWarehouse, int totalQuantity, GoodType goodType, FoodType foodType, PackageType packageType) {
         super(name, priceWarehouse, totalQuantity, goodType);
