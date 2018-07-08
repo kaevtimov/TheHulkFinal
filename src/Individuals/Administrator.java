@@ -53,6 +53,10 @@ public class Administrator extends Individual implements Orderable, Sellable, Se
         System.out.printf("Add order to admin daily orders. Product: \"%s\" [%s], quantity: %d. Total amount: %.2f lv. Order type: %s. \n",
                 productName, goodType, quantity, orderValue, order.getOrderActivity());
         counterOrderNumberWarehouse++;
+<<<<<<< HEAD
+=======
+        System.out.println();
+>>>>>>> 9f36506778bd373359cb26239c84b316ecf158bd
     }
 
     // RP rewrite

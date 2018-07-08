@@ -107,8 +107,13 @@ public class Warehouse {
 
 
     private void checkDigit(int digit)throws MyCustomException {   // dobaveno
+<<<<<<< HEAD
         if(digit <= 0){
             throw new MyCustomException("You must enter a integer bigger than 0!!!");   // za chislata s enumeraciite
+=======
+        if(digit < 0){
+            throw new MyCustomException("You must enter a valid Integer!!!");   // za chislata s enumeraciite
+>>>>>>> 9f36506778bd373359cb26239c84b316ecf158bd
         }
     }
 
@@ -205,7 +210,11 @@ public class Warehouse {
                     scanner.nextLine();
                 }
                 catch (MyCustomException mce) {             // dobaven custom exception za quantity, ako se vuvede otricatelno chislo
+<<<<<<< HEAD
                     System.out.println("You must enter a integer bigger than 0!!!");
+=======
+                    System.out.println("You must enter a positive Integer!!!");
+>>>>>>> 9f36506778bd373359cb26239c84b316ecf158bd
                     scanner.nextLine();
                 }
             }
@@ -238,9 +247,15 @@ public class Warehouse {
                             try{                          //MyCustomException
                                 System.out.println("Now please enter the desired quantity:");
                                 newQuantity = scanner.nextInt();
+<<<<<<< HEAD
 //                                if(newQuantity == 0){                                 // ako vuvede chislo ne ot 1-4
 //                                    System.out.println("Enter a number that is bigger than 0!!");      // dobaveno sega
 //                                }
+=======
+                                if(newQuantity == 0){                                 // ako vuvede chislo ne ot 1-4
+                                    System.out.println("Enter a number that is bigger than 0!!");      // dobaveno sega
+                                }
+>>>>>>> 9f36506778bd373359cb26239c84b316ecf158bd
                                 checkDigit(newQuantity);
                                 break;
                             }
@@ -249,7 +264,11 @@ public class Warehouse {
                                 scanner.nextLine();
                             }
                             catch (MyCustomException mce) {             // dobaven custom exception za quantity, ako se vuvede otricatelno chislo
+<<<<<<< HEAD
                                 System.out.println("You must enter a integer bigger than 0!!!");
+=======
+                                System.out.println("You must enter a positive Integer!!!");
+>>>>>>> 9f36506778bd373359cb26239c84b316ecf158bd
                                 scanner.nextLine();
                             }
                         }
@@ -401,7 +420,11 @@ public class Warehouse {
                     break;
                 } else {
                     System.out.println();
+<<<<<<< HEAD
                     System.out.printf("Enter a number from 1- %d!!", i-1);      // dobaveno sega
+=======
+                    System.out.printf("Enter a number from 1 - %d!!", i - 1);      // dobaveno sega
+>>>>>>> 9f36506778bd373359cb26239c84b316ecf158bd
                 }
             }catch(InputMismatchException ime){
                 System.out.println("You must enter a integer!");
@@ -448,7 +471,11 @@ public class Warehouse {
                     break;
                 } else {
                     System.out.println();
+<<<<<<< HEAD
                     System.out.printf("Enter a number from 1- %d!!", i-1);      // dobaveno sega
+=======
+                    System.out.printf("Enter a number from 1- %d!!", i);      // dobaveno sega
+>>>>>>> 9f36506778bd373359cb26239c84b316ecf158bd
                 }
             }catch(InputMismatchException ime){
                 System.out.println("You must enter a integer!");
@@ -493,7 +520,11 @@ public class Warehouse {
                     break;
                 } else {
                     System.out.println();
+<<<<<<< HEAD
                     System.out.printf("Enter a number from 1- %d!!", i-1);      // dobaveno sega
+=======
+                    System.out.printf("Enter a number from 1- %d!!", i);      // dobaveno sega
+>>>>>>> 9f36506778bd373359cb26239c84b316ecf158bd
                 }
             }catch(InputMismatchException ime){
                 System.out.println("You must enter a integer!");
@@ -538,7 +569,11 @@ public class Warehouse {
                     break;
                 } else {
                     System.out.println();
+<<<<<<< HEAD
                     System.out.printf("Enter a number from 1- %d!!", i-1);      // dobaveno sega
+=======
+                    System.out.printf("Enter a number from 1- %d!!", i);      // dobaveno sega
+>>>>>>> 9f36506778bd373359cb26239c84b316ecf158bd
                 }
             }catch(InputMismatchException ime){
                 System.out.println("You must enter a integer!");
@@ -598,7 +633,7 @@ public class Warehouse {
         if(customer.getBudget() >= contractAmount){
             // ako budgeta e dostatuchen
             System.out.printf("- The order is processed! Order made from [%s] customer: %s, %s.\n" +
-                    "- Now the contract is signed, the invoice was made and you must pay, total amount (%.2f) lv, please.\n", customer.getCustomerType(),
+                            "- Now the contract is signed, the invoice was made and you must pay, total amount (%.2f) lv, please.\n", customer.getCustomerType(),
                     customer.getName(), customer.getPersonalType(), contractAmount);
             System.out.println("How do you prefer to pay?");
             int i = 1;
