@@ -3,7 +3,7 @@ package Goods;
 public class SoftDrink extends Drinks {
 
     private SoftDrinkType softDrinkType;
-    private PackageType packageType;            // trqbva li ni izobshto? // RP dobaveno v Alcohol, SoftDrinks i Food
+    private PackageType packageType;         
 
     public SoftDrink(String name, double priceWarehouse, int totalQuantity, GoodType goodType, SoftDrinkType softDrinkType, PackageType packageType) {
         super(name, priceWarehouse, totalQuantity, goodType);
@@ -22,7 +22,7 @@ public class SoftDrink extends Drinks {
     public void showProduct() {
         System.out.printf("[%s][%s] [\"%s\"], price: %.2f, quantity: %d, package: %s.\n",
                 getGoodType(), getSoftDrinkType(), getName(), getPriceWarehouse(), getTotalQuantity(), getPackageType() );
-        System.out.println(); // RP dobaven Package Type v metoda
+        System.out.println(); 
     }
 }
 
