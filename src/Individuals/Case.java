@@ -40,11 +40,4 @@ public class Case {
             System.out.printf("Warehouse BALANCE:[%.2f]. We are on a right way!\n", income-outcome);
         }
     }
-
-    public static class MyCustomException extends Exception{
-
-        public MyCustomException(String message){
-            super(message);
-        }
-    }
 }

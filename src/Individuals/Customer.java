@@ -7,6 +7,7 @@ import Orders.Orderable;
 import Orders.PayType;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -104,6 +105,9 @@ public class Customer extends Individual implements Orderable, Searchable, Payab
                 requestNumber = scanner.nextInt();
                 checkDigit(requestNumber);
             }catch (MyCustomException mce){
+                System.out.println("Enter a positive number!");
+                //scanner.nextLine();
+            }catch (InputMismatchException ime){
                 System.out.println("Enter a positive number!");
                 //scanner.nextLine();
             }
