@@ -10,10 +10,10 @@ public class Boss extends Individual{
     }
 
     // welcome when set the warehouse with income in the case
-    public void investWarehouseAndCase() {
-        System.out.printf("New warehouse 'THE HULK' is open now by %s", getName());
+    public void investWarehouseAndCase(Warehouse warehouse, Case warehouseCase) {
+        System.out.printf("New warehouse '%s' is open now by %s.", warehouse.getName(), getName());
         System.out.println();
-        System.out.println("Warehouse case is set - income 2500000, outcome 0.");
+        System.out.printf("Warehouse case is set - income %.2f, outcome %.2f", warehouseCase.getIncome(), warehouseCase.getOutcome());
         System.out.println();
     }
 

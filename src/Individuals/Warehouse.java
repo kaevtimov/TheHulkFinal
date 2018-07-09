@@ -22,7 +22,7 @@ public class Warehouse {
     private ArrayList<Good> toBeReload;               // list to be reloaded from the suppliers
 
 
-    public Warehouse(String name){
+    public Warehouse(String name) {
         this.name = name;
         this.inventory = new ArrayList<>();
         this.alcoholInventory = new ArrayList<>();
@@ -39,34 +39,34 @@ public class Warehouse {
 
 
     // method to show actual goods, quantity and info
-    public void showCatalog(){
+    public void showCatalog() {
         System.out.println("-----------------------------");
         System.out.println("WAREHOUSE PRODUCT CATALOGUE: ");
         System.out.println("-------------------------------------------------------------------------------------");
         System.out.println();
-        for (Good good: alcoholInventory) {
+        for (Good good : alcoholInventory) {
             good.showProduct();
         }
-        for (Good good: softDrinkInventory) {
+        for (Good good : softDrinkInventory) {
             good.showProduct();
         }
-        for (Good good: foodsInventory) {
+        for (Good good : foodsInventory) {
             good.showProduct();
         }
-        for (Good good: domesticProductsInventory) {
+        for (Good good : domesticProductsInventory) {
             good.showProduct();
         }
         System.out.println("-------------------------------------------------------------------------------------");
     }
 
-    public void toBeReload(){                 // check the list for reloading from supplier
-        for (Good good:toBeReload) {
+    public void toBeReload() {                 // check the list for reloading from supplier
+        for (Good good : toBeReload) {
             System.out.printf("Product to reload: %s - %s, quantity: %d.\n", good.getName(), good.getGoodType(), good.getTotalQuantity());
         }
     }
 
-    public void showOrders(){                   // shows all warehouse orders from customers and to suppliers
-        for (Order order:warehouseOrders) {
+    public void showOrders() {                   // shows all warehouse orders from customers and to suppliers
+        for (Order order : warehouseOrders) {
             order.showOrder();
 
         }
@@ -74,7 +74,7 @@ public class Warehouse {
 
     // add products in the warehouse and put it to be reloading for the first time by boss
     void addAlcohol(String name, double priceWarehouse, int totalQuantity, GoodType goodType,
-                    double alcoholContaining, AlcoholType alcoholType , PackageType packageType){
+                    double alcoholContaining, AlcoholType alcoholType, PackageType packageType) {
         Alcohol alcohol = new Alcohol(name, priceWarehouse, totalQuantity, goodType, alcoholContaining, alcoholType, packageType);
         inventory.add(alcohol);
         alcoholInventory.add(alcohol);
@@ -82,29 +82,29 @@ public class Warehouse {
 
     // add products in the warehouse and put it to be reloading for the first time by boss
     void addSoftDrink(String name, double priceWarehouse, int totalQuantity, GoodType goodType, SoftDrinkType softDrinkType,
-                      PackageType packageType){
+                      PackageType packageType) {
         SoftDrink softDrink = new SoftDrink(name, priceWarehouse, totalQuantity, goodType, softDrinkType, packageType);
         inventory.add(softDrink);
         softDrinkInventory.add(softDrink);
     }
 
     // add products in the warehouse and put it to be reloading for the first time by boss
-    void addFood(String name, double priceWarehouse, int totalQuantity, GoodType goodType, FoodType foodType, PackageType packageType){
+    void addFood(String name, double priceWarehouse, int totalQuantity, GoodType goodType, FoodType foodType, PackageType packageType) {
         Food food = new Food(name, priceWarehouse, totalQuantity, goodType, foodType, packageType);
         inventory.add(food);
         foodsInventory.add(food);
     }
 
     // add products in the warehouse and put it to be reloading for the first time by boss
-    void addDomesticProducts(String name, double priceWarehouse, int totalQuantity, GoodType goodType, DomesticType domesticType){
+    void addDomesticProducts(String name, double priceWarehouse, int totalQuantity, GoodType goodType, DomesticType domesticType) {
         Domestic domesticP = new Domestic(name, priceWarehouse, totalQuantity, goodType, domesticType);
         inventory.add(domesticP);
         domesticProductsInventory.add(domesticP);
     }
 
 
-    private void checkDigit(int digit)throws MyCustomException { // check exeption for the customer input number
-        if(digit <= 0){
+    private void checkDigit(int digit) throws MyCustomException { // check exeption for the customer input number
+        if (digit <= 0) {
             throw new MyCustomException();
         }
     }
@@ -145,19 +145,17 @@ public class Warehouse {
 
             scanner.nextLine();
             int quantity = 0;
-            boolean inputCorrectQuantity = false;
-            while(!inputCorrectQuantity) {               // works until customer inputs valid number
-                try{                          //MyCustomException
+
+            while (true) {               // works until customer inputs valid number
+                try {                          //MyCustomException
                     System.out.println("Now please enter the needed quantity:");
                     quantity = scanner.nextInt();
                     checkDigit(quantity);
                     break;
-                }
-                catch(InputMismatchException ime){
+                } catch (InputMismatchException ime) {
                     System.out.println("You must enter a valid number!");
                     scanner.nextLine();
-                }
-                catch (MyCustomException mce) {             // custom exception for input not possitiv quantity
+                } catch (MyCustomException mce) {             // custom exception for input not possitiv quantity
                     System.out.println("You must enter a number bigger than 0!");
                     scanner.nextLine();
                 }
@@ -166,40 +164,37 @@ public class Warehouse {
             customer.searchProduct(productName, quantity, goodType);  //customera input the searching good
             // check if good is available in the warehouse
             boolean contains = false;
-            for (Good good:inventory) {
-                if(good.getTotalQuantity()>=quantity && good.getName().equalsIgnoreCase(productName) && good.getGoodType()==goodType){
+            for (Good good : inventory) {
+                if (good.getTotalQuantity() >= quantity && good.getName().equalsIgnoreCase(productName) && good.getGoodType() == goodType) {
                     contains = true;
-                    System.out.printf("We have \"%s\" %s available.\n",productName, goodType);
+                    System.out.printf("We have \"%s\" %s available.\n", productName, goodType);
                     System.out.println("Do you want to put this product as a request? (Yes/No)");
                     String answer = scanner.nextLine();
-                    if(answer.equalsIgnoreCase("yes")){
+                    if (answer.equalsIgnoreCase("yes")) {
                         constructCustomerRequest(customer, productName, goodType, quantity);
                         break;
                     }
-                }else if(good.getName().equalsIgnoreCase(productName) && good.getGoodType()==goodType && quantity > good.getTotalQuantity()){  //promeneno
+                } else if (good.getName().equalsIgnoreCase(productName) && good.getGoodType() == goodType && quantity > good.getTotalQuantity()) {  //promeneno
                     contains = true;
                     System.out.printf("Sorry, available quantity %s of %s (%s).\n" +
                                     "Do you want to order less quantity, which is under %d, and then put it as a request? (Yes/No)\n"
-                            ,good.getTotalQuantity(), productName, goodType, good.getTotalQuantity());
+                            , good.getTotalQuantity(), productName, goodType, good.getTotalQuantity());
                     String answer = scanner.nextLine();
-                    if(answer.equalsIgnoreCase("yes")){
-                        System.out.printf("Please enter new quantity under %d.\n",good.getTotalQuantity());
+                    if (answer.equalsIgnoreCase("yes")) {
+                        System.out.printf("Please enter new quantity under %d.\n", good.getTotalQuantity());
 
                         int newQuantity = 0;
-                        boolean inputNewQuantity = false;
-                        while(!inputCorrectQuantity) {               // works until customer inputs valid number
-                            try{                          //MyCustomException
+
+                        while (true) {               // works until customer inputs valid number
+                            try {                          //MyCustomException
                                 System.out.println("Now please enter the needed quantity:");
                                 newQuantity = scanner.nextInt();
-
                                 checkDigit(newQuantity);
                                 break;
-                            }
-                            catch(InputMismatchException ime){
+                            } catch (InputMismatchException ime) {
                                 System.out.println("You must enter a number!");
                                 scanner.nextLine();
-                            }
-                            catch (MyCustomException mce) {              // catch exeption for not positive input number
+                            } catch (MyCustomException mce) {              // catch exeption for not positive input number
                                 System.out.println("You must enter a integer bigger than 0!!!");
                                 scanner.nextLine();
                             }
@@ -210,7 +205,10 @@ public class Warehouse {
                         break;
                     }
                 }
-            }if(contains==false){ System.out.println("The product is not available in our catalog!");}// output when there's no such product in the catalogue
+            }
+            if (contains == false) {
+                System.out.println("The product is not available in our catalog!");
+            }// output when there's no such product in the catalogue
             System.out.println("Would you like to continue? (Yes/No)");
             String answerCustomer = scanner.nextLine();
             if (answerCustomer.equalsIgnoreCase("y")
@@ -233,48 +231,48 @@ public class Warehouse {
                 break;
             }
 
-            if(!customer.getCustomerOrders().isEmpty()){
-                if(numberOfCustomerRequests > 0){
+            if (!customer.getCustomerOrders().isEmpty()) {
+                if (numberOfCustomerRequests > 0) {
                     System.out.println("Do you want to cancel any request? (Yes/No)");    //appears only when have request
                     String answerCancel = scanner.nextLine();
-                    if(answerCancel.equalsIgnoreCase("yes") || answerCancel.equalsIgnoreCase("y")){
+                    if (answerCancel.equalsIgnoreCase("yes") || answerCancel.equalsIgnoreCase("y")) {
                         customer.cancelRequest();
                         numberOfCustomerRequests--;
-                    }else{
+                    } else {
                         break;
                     }
-                }else{
+                } else {
                     break;
                 }
             }
         } while (true);
 
 
-        if(!customer.getCustomerOrders().isEmpty() && numberOfCustomerRequests != 0){  //when have ACTIVE requests
+        if (!customer.getCustomerOrders().isEmpty() && numberOfCustomerRequests != 0) {  //when have ACTIVE requests
             boolean canSign = false;
-            for (Order order:customer.getCustomerOrders()) {                // check not to sign contract, if all requests are canceled
-                if(order.getOrderActivity()==OrderActivity.ACTIVE){
+            for (Order order : customer.getCustomerOrders()) {                // check not to sign contract, if all requests are canceled
+                if (order.getOrderActivity() == OrderActivity.ACTIVE) {
                     canSign = true;
                 }
             }
-            if(canSign==true){
+            if (canSign == true) {
                 System.out.println("Do you want to sign contract now? (Yes/No)");
                 String answerSign = scanner.nextLine();
-                if(answerSign.equalsIgnoreCase("yes")){
-                    finalizeOrder(customer,admin,casse);
-                }else{
+                if (answerSign.equalsIgnoreCase("yes")) {
+                    finalizeOrder(customer, admin, casse);
+                } else {
                     System.out.println("Customer refused to sign and left.");
                 }
-            }else{
+            } else {
                 System.out.println("You have no requests to sign a contract. Have a nice day!");
             }
-        }else{
+        } else {
             System.out.println("Customer has no requests to order.");
         }
     }
 
 
-    private String choosingGoodType(){
+    private String choosingGoodType() {
         String choice = "";
         boolean isCorrectNumber = false;
         int i = 1;
@@ -286,12 +284,12 @@ public class Warehouse {
         }
 
         System.out.println("The system expects your choice..");
-        //chatch MyCustomException when input is not number
+        //catch MyCustomException when input is not number
         int n = 0;
         while (!isCorrectNumber) {
-            try{
+            try {
                 n = scanner.nextInt();
-                if(n == 0 || n > 5){                                 //when input number is not between 1-5
+                if (n == 0 || n > 5) {                                 //when input number is not between 1-5
                     System.out.println("Enter a number from 1-5!");
                 }
                 checkDigit(n);
@@ -318,8 +316,7 @@ public class Warehouse {
                         isCorrectNumber = true;
                         break;
                 }
-            }
-            catch(InputMismatchException ime){
+            } catch (InputMismatchException ime) {
                 System.out.println("You must enter a number!");
                 scanner.nextLine();
             } catch (MyCustomException mce) {             // custom exception for not positive quantity
@@ -345,16 +342,16 @@ public class Warehouse {
         int n = 0;
 
         do { //exception for not in the good collection
-            try{
+            try {
                 n = scanner.nextInt();
                 checkDigit(n);
                 if ((0 < n) && (n < i)) {
                     break;
                 } else {
                     System.out.println();
-                    System.out.printf("Enter a number from 1- %d!!\n", i-1);
+                    System.out.printf("Enter a number from 1- %d!!\n", i - 1);
                 }
-            }catch(InputMismatchException ime){
+            } catch (InputMismatchException ime) {
                 System.out.println("You must enter a number!");
                 scanner.nextLine();
             } catch (MyCustomException mce) {             // checks for not positive number
@@ -376,7 +373,6 @@ public class Warehouse {
     }
 
 
-
     private String choiceOfFoodInventory() { // shows users choice for good trademarks
         System.out.println();
         System.out.println("Please enter product name:");
@@ -392,16 +388,16 @@ public class Warehouse {
         int n = 0; // exeption if the input choice is not a number
 
         do { //exception for not in the good collection
-            try{
+            try {
                 n = scanner.nextInt();
                 checkDigit(n);
                 if ((0 < n) && (n < i)) {
                     break;
                 } else {
                     System.out.println();
-                    System.out.printf("Enter a number from 1- %d!!", i-1);
+                    System.out.printf("Enter a number from 1- %d!!", i - 1);
                 }
-            }catch(InputMismatchException ime){
+            } catch (InputMismatchException ime) {
                 System.out.println("You must enter a number!");
                 scanner.nextLine();
             } catch (MyCustomException mce) {             // checks for not positive number
@@ -437,16 +433,16 @@ public class Warehouse {
         int n = 0; // exception catch if the input is not a number
 
         do { //check if the input is in the range of collection
-            try{
+            try {
                 n = scanner.nextInt();
                 checkDigit(n);
                 if ((0 < n) && (n < i)) {
                     break;
                 } else {
                     System.out.println();
-                    System.out.printf("Enter a number from 1- %d!!", i-1);
+                    System.out.printf("Enter a number from 1- %d!!", i - 1);
                 }
-            }catch(InputMismatchException ime){
+            } catch (InputMismatchException ime) {
                 System.out.println("You must enter a number!");
                 scanner.nextLine();
             } catch (MyCustomException mce) {             // if input is not positive number
@@ -482,16 +478,16 @@ public class Warehouse {
         int n = 0; // catch if the input is not a number
 
         do { //check if the number is not in the range of the collection
-            try{
+            try {
                 n = scanner.nextInt();
                 checkDigit(n);
                 if ((0 < n) && (n < i)) {
                     break;
                 } else {
                     System.out.println();
-                    System.out.printf("Enter a number from 1- %d!!", i-1);
+                    System.out.printf("Enter a number from 1- %d!!", i - 1);
                 }
-            }catch(InputMismatchException ime){
+            } catch (InputMismatchException ime) {
                 System.out.println("You must enter a number!");
                 scanner.nextLine();
             } catch (MyCustomException mce) {             // if the number is not positive
@@ -513,13 +509,11 @@ public class Warehouse {
     }
 
 
-
-
     // prepare the requested order when it's made.
-    private void constructCustomerRequest(Customer customer, String productName, GoodType goodType, int quantity){
+    private void constructCustomerRequest(Customer customer, String productName, GoodType goodType, int quantity) {
         double orderValue = 0;
-        for (Good good:inventory) {
-            if(good.getName().equalsIgnoreCase(productName) && good.getTotalQuantity() >= quantity) {
+        for (Good good : inventory) {
+            if (good.getName().equalsIgnoreCase(productName) && good.getTotalQuantity() >= quantity) {
                 orderValue = good.getPriceWarehouse() * quantity;
                 customer.order(goodType, quantity, orderValue, productName);
                 break;
@@ -528,9 +522,7 @@ public class Warehouse {
     }
 
 
-
-
-    private void finalizeOrder(Customer customer, Administrator admin, Case aCase)  {
+    private void finalizeOrder(Customer customer, Administrator admin, Case casse) {
         System.out.printf("- %s wants to proceed and sign a Order contract for the requests!\n", customer.getName());
         // put the customer order in the warehouse orders
         double contractAmount = 0;       //the start value of the contract is 0
@@ -546,7 +538,7 @@ public class Warehouse {
                 }
             }
         }// check the budget of the customer before the order
-        if(customer.getBudget() >= contractAmount){ //budget is enough
+        if (customer.getBudget() >= contractAmount) { //budget is enough
             System.out.printf("Order made from [%s] customer: %s, %s is in process!\n" +
                             "The contract is signed, the invoice was made.\n" + "Total amount (%.2f) lv. Warehouse is waiting for paying.\n", customer.getCustomerType(),
                     customer.getName(), customer.getPersonalType(), contractAmount);
@@ -561,39 +553,41 @@ public class Warehouse {
             int choiceOfPayType = 0;
             PayType payType = null;
             boolean inputCorrect = false;
-            while(!inputCorrect){               // continue until the input is INTEGER
-                try{            // my custom exception
+            while (!inputCorrect) {               // continue until the input is INTEGER
+                try {            // my custom exception
                     choiceOfPayType = scanner.nextInt();
-                    if(choiceOfPayType > 3 || choiceOfPayType==0){
+                    if (choiceOfPayType > 3 || choiceOfPayType == 0) {
                         System.out.println("Enter a correct number!");
                     }
                     checkDigit(choiceOfPayType);
                     switch (choiceOfPayType) {
-                        case 1: payType = PayType.CREDIT;
-                            inputCorrect=true;
+                        case 1:
+                            payType = PayType.CREDIT;
+                            inputCorrect = true;
                             break;
-                        case 2: payType = PayType.DEBITCARD;
-                            inputCorrect=true;
+                        case 2:
+                            payType = PayType.DEBITCARD;
+                            inputCorrect = true;
                             break;
-                        case 3: payType = PayType.CASH;
-                            inputCorrect=true;
+                        case 3:
+                            payType = PayType.CASH;
+                            inputCorrect = true;
                             break;
                         default:
                             break;
                     }
-                }catch(InputMismatchException ime){
+                } catch (InputMismatchException ime) {
                     System.out.println("You must enter a number!");
                     scanner.nextLine();
-                }
-                catch(MyCustomException mce){
+                } catch (MyCustomException mce) {
                     System.out.println("Enter a positive number!");
                     scanner.nextLine();
                 }
             }
             customer.pay(payType, contractAmount, customer.getPersonalType());
             customer.setBudget(customer.getBudget() - contractAmount);       // set down the customer budget
-            admin.sell(aCase, contractAmount);  //administratora sells and ++ warehouse income
-        }else{   // budjet is not enough
+            admin.sell(casse, contractAmount);  //administratora sells and ++ warehouse income
+        } else {   // budjet is not enough
             System.out.printf("- The order is processed! Sorry, but You don't have enough budget to finish the order! Deficit [%.2f]\n",
                     contractAmount - customer.getBudget());
         }
@@ -602,26 +596,25 @@ public class Warehouse {
     }
 
 
-
-    public void checkProductsQuantity(Administrator admin, Supplier supplier, Case casse){     //check goods for available quantity and find for reloading
+    public void checkProductsQuantity(Administrator admin, Supplier supplier, Case casse) {     //check goods for available quantity and find for reloading
         boolean isFull = true;
-        for (Good good:inventory) {     // if it could be reloaded
-            if(good.getTotalQuantity() < 50){  // when it's under 50, add in toBeReloaded list
-                if(!toBeReload.contains(good)){
-                    isFull=false;
+        for (Good good : inventory) {     // if it could be reloaded
+            if (good.getTotalQuantity() < 50) {  // when it's under 50, add in toBeReloaded list
+                if (!toBeReload.contains(good)) {
+                    isFull = false;
                     toBeReload.add(good);
                     System.out.printf("Product to reload: %s [%s], quantity: %d.\n", good.getName(), good.getGoodType(), good.getTotalQuantity());
                 }
             }
         }
-        if(isFull){   // if no need to reload
+        if (isFull) {   // if no need to reload
             System.out.println("All products have the normal amount of quantity!");
-        }else{
+        } else {
             System.out.println("Do you want to proceed to reloading? (Yes/No)");
             String answer = scanner.nextLine();
-            if(answer.equalsIgnoreCase("yes")){
+            if (answer.equalsIgnoreCase("yes")) {
                 contactProducers(admin, supplier, casse);
-            }else{
+            } else {
                 System.out.println("No reload");
             }
         }
@@ -633,13 +626,13 @@ public class Warehouse {
         for (Good good : toBeReload) {
             admin.searchProduct(good.getName(), 100, good.getGoodType());  //fix the reloading quantity 100
             double orderValue = good.getPriceProducer() * 100;
-            total+=orderValue;  // counts the total sum of the reloading
+            total += orderValue;  // counts the total sum of the reloading
             admin.order(good.getGoodType(), 100, orderValue, good.getName()); // administrator orders one by one, because of different suppliars
             admin.pay(PayType.CREDIT, orderValue, admin.getPersonalType());                  // administrator pays the order
             supplier.sell(casse, orderValue);                          // suplier sells to warehouse and ++ outcome in the case
 
-            if(inventory.contains(good)){                         // upload the quantity of the products in the warehouse
-                good.setTotalQuantity(good.getTotalQuantity()+100);
+            if (inventory.contains(good)) {                         // upload the quantity of the products in the warehouse
+                good.setTotalQuantity(good.getTotalQuantity() + 100);
             }
         }
         toBeReload.clear(); //clear the product from the list after reloading
@@ -647,6 +640,7 @@ public class Warehouse {
             order.setOrderActivity(OrderActivity.FINISHED);
             warehouseOrders.add(order);
         }
+        System.out.println();
         System.out.printf("Total sum of reloading: [%.2f]\n", total);
     }
 }
