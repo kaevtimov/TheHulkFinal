@@ -2,7 +2,7 @@ Team name – The Hulk
 
 list of team members (usernames in http://telerikacademy.com):
 -    pavlovarayna
--    kaevtimov
+-    mc_hack
 -    georgievgeorgi
 
 Project purpose 
