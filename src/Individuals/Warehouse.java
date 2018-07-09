@@ -494,7 +494,7 @@ public class Warehouse {
             }catch(InputMismatchException ime){
                 System.out.println("You must enter a number!");
                 scanner.nextLine();
-            } catch (MyCustomException mce) {             // if the number is not possitive
+            } catch (MyCustomException mce) {             // if the number is not positive
                 System.out.println("You must enter a positive number!");
                 scanner.nextLine();
             }
@@ -545,8 +545,8 @@ public class Warehouse {
                     warehouseOrders.add(customer.getCustomerOrders().get(i));        // put the customer order in all warehouse orders, if not canceled
                 }
             }
-        }// check the budjet of the customer before the order
-        if(customer.getBudget() >= contractAmount){ //budjet is enough
+        }// check the budget of the customer before the order
+        if(customer.getBudget() >= contractAmount){ //budget is enough
             System.out.printf("Order made from [%s] customer: %s, %s is in process!\n" +
                             "The contract is signed, the invoice was made.\n" + "Total amount (%.2f) lv. Warehouse is waiting for paying.\n", customer.getCustomerType(),
                     customer.getName(), customer.getPersonalType(), contractAmount);

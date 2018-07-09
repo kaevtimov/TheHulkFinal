@@ -24,7 +24,7 @@ public class Order {
         this.personalType = personalType;
     }
 
-    public void showOrder(){      // za da si proverqva customera poruchkite
+    public void showOrder(){      // for checking customer and warehouse orders
         System.out.printf("Order number[%d][%s]: %s-\"%s\", quantity: %d. Total amount: %.2f. Made from: [%s]\n",
                 getNumber(), orderActivity, getGoodType(), getProductName(), getQuantity(), getTotalAmount(), getPersonalType());
     }

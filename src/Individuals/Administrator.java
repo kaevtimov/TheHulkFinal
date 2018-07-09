@@ -46,7 +46,7 @@ public class Administrator extends Individual implements Orderable, Sellable, Se
                 productName, quantity, goodType);
     }
 
-    // administrator add to arraylist with products to load
+    // administrator add to his personal array list with ordered products and numerates them
     @Override
     public void order(GoodType goodType, int quantity, double orderValue, String productName) {
         Order order = new Order(goodType, productName, orderValue, counterOrderNumberWarehouse, quantity, PersonalType.ADMINISTRATOR);

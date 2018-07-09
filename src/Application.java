@@ -20,11 +20,6 @@ public class Application {
         // the boss sets up the warehouse and the case
         boss.investWarehouseAndCase();
 
-        System.out.println(customer);
-        System.out.println(customer2);
-        System.out.println(admin);
-        System.out.println(boss);
-
 
         // we need to check the starting balance of the warehouse
         warehouseCase.checkBalance();
@@ -52,8 +47,9 @@ public class Application {
         System.out.println(customer2.getBudget());
         warehouseCase.checkBalance();
 
-        //and finally we can see all the orders that have been made in the warehouse
+        //and finally we can see all the orders that have been made in the warehouse and the diff in the products quantity
         warehouse.showOrders();
+        warehouse.showCatalog();
 
 
     }
