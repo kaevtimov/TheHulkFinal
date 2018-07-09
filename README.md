@@ -21,7 +21,7 @@ The URL of your Git repository –  https://github.com/kaevtimov/TheHulkFinal
 
 Additional information 
 The application represents opportunities:
-- determination of the subjects, taking part of ti application operations
+- determination of the subjects, taking part of the application operations
 - initially creating a warehouse and a storehouse
 - checking for availability and loading of the goods from the catalog
 - listing the available goods
